@@ -1,0 +1,65 @@
+#!/bin/sh
+
+if [ x$ACT_HOME = x ]
+then
+	echo "Please set the environment variable ACT_HOME to the install directory"
+        exit 1
+fi
+
+if [ ! -f $ACT_HOME/lib/libgalois_shmem.a ]
+then
+	echo "Please install the Galois library before running ./build"
+	exit 1
+fi
+
+cmake_build() {
+  dir=$1
+  echo 
+  echo "#### Building and installing package: $1 ####"
+  echo
+  (cd $dir; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME .. && make && make install)
+}
+
+#
+# Build and install the ACT library
+#
+echo
+echo "####  Building and installing the core ACT library ####"
+echo
+export VLSI_TOOLS_SRC=`pwd`/act
+(cd act; ./configure $ACT_HOME; ./build; make install)
+
+#
+# Build and install the LEF/DEF library
+#
+echo
+echo "####  Building and installing the LEF/DEF parser ####"
+echo
+(cd lefdef; make && make install)
+
+#
+# Build and install... 
+
+# phyDB
+cmake_build phyDB
+
+# BiPart
+cmake_build BiPart
+
+# Dali
+cmake_build Dali
+
+# PWRoute
+cmake_build PWRoute
+
+# SPRoute
+cmake_build SPRoute
+
+# TritonRoute-WXL
+cmake_build TritonRoute-WXL
+
+# interact
+echo
+echo "#### Building interact ####
+echo
+(cd interact; ./configure; make depend && make && make install)

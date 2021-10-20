@@ -22,3 +22,9 @@
 [submodule "Galois"]
 	path = Galois
 	url = https://github.com/IntelligentSoftwareSystems/Galois
+[submodule "lefdef"]
+	path = lefdef
+	url = https://github.com/asyncvlsi/lefdef
+[submodule "TritonRoute-WXL"]
+	path = TritonRoute-WXL
+	url = https://github.com/asyncvlsi/TritonRoute-WXL
