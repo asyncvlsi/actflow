@@ -1,0 +1,24 @@
+[submodule "act"]
+	path = act
+	url = http://github.com/asyncvlsi/act
+[submodule "phyDB"]
+	path = phyDB
+	url = http://github.com/asyncvlsi/phyDB
+[submodule "Dali"]
+	path = Dali
+	url = http://github.com/asyncvlsi/Dali
+[submodule "BiPart"]
+	path = BiPart
+	url = http://github.com/asyncvlsi/BiPart
+[submodule "SPRoute"]
+	path = SPRoute
+	url = http://github.com/asyncvlsi/SPRoute
+[submodule "PWRoute"]
+	path = PWRoute
+	url = http://github.com/asyncvlsi/PWRoute
+[submodule "interact"]
+	path = interact
+	url = http://github.com/asyncvlsi/interact
+[submodule "Galois"]
+	path = Galois
+	url = https://github.com/IntelligentSoftwareSystems/Galois
