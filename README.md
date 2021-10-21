@@ -14,7 +14,7 @@ The Galois library depends on the following:
 * libllvm (>= 7.0 with RTTI support)
 * libfmt (>= 4.0)
 
-More details about optional features/etc. are [available]((https://github.com/IntelligentSoftwareSystems/Galois).
+More details about optional features/etc. are [available](https://github.com/IntelligentSoftwareSystems/Galois).
 
 The ACT library depends on the following:
 
