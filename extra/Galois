@@ -1,0 +1,14 @@
+--- lonestar/scientific/cpu/longestedge/test/catch.hpp 2021-10-18 11:50:01.00000000 -0700
++++ lonestar/scientific/cpu/longestedge/test/catch.hpp 2021-10-18 11:51:01.00000000 -0700
+@@ -7858,8 +7858,11 @@ namespace Catch {
+ }
+ 
+ #ifdef CATCH_PLATFORM_MAC
+-
++   #ifdef __arm64__
++       #define CATCH_TRAP()  __asm__(".inst 0xe7f001f0")
++   #else
+     #define CATCH_TRAP() __asm__("int $3\n" : : ) /* NOLINT */
++   #endif
+ 
+ #elif defined(CATCH_PLATFORM_IPHONE)

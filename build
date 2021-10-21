@@ -6,9 +6,9 @@ then
         exit 1
 fi
 
-if [ ! -f $ACT_HOME/lib/libgalois_shmem.a ]
+if [ x$LLVM_DIR = x ]
 then
-	echo "Please install the Galois library before running ./build"
+	echo "Please set the environment variavble LLVM_DIR to the directory containing LLVMConfig.cmake"
 	exit 1
 fi
 
@@ -21,6 +21,12 @@ cmake_build() {
 }
 
 #
+# Apply patches
+#
+echo "Applying patch to Galois library..."
+(cd Galois; patch -p0 < ../extra/Galois)
+
+#
 # Build and install the ACT library
 #
 echo
@@ -28,6 +34,11 @@ echo "####  Building and installing the core ACT library ####"
 echo
 export VLSI_TOOLS_SRC=`pwd`/act
 (cd act; ./configure $ACT_HOME; ./build; make install)
+
+#
+# Build and install the Galois library
+#
+cmake_build Galois
 
 #
 # Build and install the LEF/DEF library
@@ -60,6 +71,6 @@ cmake_build TritonRoute-WXL
 
 # interact
 echo
-echo "#### Building interact ####
+echo "#### Building interact ####"
 echo
 (cd interact; ./configure; make depend && make && make install)
