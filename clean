@@ -1,0 +1,19 @@
+#!/bin/sh
+
+
+echo "Cleaning all directories..."
+
+echo "*** act ***"
+(cd act; make realclean)
+
+echo "*** lefdef ***"
+(cd lefdef; make clean)
+
+for i in Galois phyDB BiPart Dali PWRoute SPRoute TritonRoute-WXL
+do
+	echo "*** $i ***"
+	(cd $i; rm -rf build)
+done
+
+echo "*** interact ***"
+(cd interact; make realclean)
