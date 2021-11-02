@@ -32,3 +32,6 @@ The ACT library depends on the following:
 3. Run `./build`
 
 This should build and install all the libraries and tools needed.
+
+If you'd like to delete all the files generated during the build process, run `./clean`
+
