@@ -20,6 +20,14 @@ cmake_build() {
   (cd $dir; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME .. && make && make install)
 }
 
+cmake_build_bipart() {
+  dir=BiPart
+  echo
+  echo "#### Building and installing package: $1 ####"
+  echo
+  (cd BiPart; if [ ! -d build ]; then mkdir build; fi; cd build; LEF_ROOT=$ACT_HOME GALOIS_INCLUDE=$ACT_HOME/include GALOIS_LIB=$ACT_HOME/lib DEF_ROOT=$ACT_HOME cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME ..  && make && make install)
+}
+
 #
 # Apply patches
 #
@@ -55,7 +63,7 @@ echo
 cmake_build phyDB
 
 # BiPart
-cmake_build BiPart
+cmake_build_bipart
 
 # Dali
 cmake_build Dali
