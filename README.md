@@ -25,7 +25,7 @@ The ACT library depends on the following:
 
 ## Steps
 
-1. Pick an installation directory for all the tools, and set the environment variable `ACT_HOME` to this directory.
+1. Pick an installation directory for all the tools, and set the environment variable `ACT_HOME` to this directory. Create this directory.
 
 2. Set the environment variable `LLVM_DIR` to the path to `LLVMConfig.cmake` in your LLVM installation.
 
