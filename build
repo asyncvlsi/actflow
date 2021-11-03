@@ -82,3 +82,8 @@ echo
 echo "#### Building interact ####"
 echo
 (cd interact; ./configure; make depend && make && make install)
+
+# stdlib
+echo 
+echo "#### Installing ACT std lib ####"
+(cd stdlib; make install)

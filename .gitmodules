@@ -28,3 +28,6 @@
 [submodule "TritonRoute-WXL"]
 	path = TritonRoute-WXL
 	url = https://github.com/asyncvlsi/TritonRoute-WXL
+[submodule "stdlib"]
+	path = stdlib
+	url = http://github.com/asyncvlsi/stdlib
