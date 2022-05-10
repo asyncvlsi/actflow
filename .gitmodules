@@ -31,3 +31,9 @@
 [submodule "stdlib"]
 	path = stdlib
 	url = http://github.com/asyncvlsi/stdlib
+[submodule "chp2prs"]
+	path = chp2prs
+	url = https://github.com/asyncvlsi/chp2prs
+[submodule "dflowmap"]
+	path = dflowmap
+	url = https://github.com/asyncvlsi/dflowmap

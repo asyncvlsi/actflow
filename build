@@ -87,3 +87,15 @@ echo
 echo 
 echo "#### Installing ACT std lib ####"
 (cd stdlib; make install)
+
+#
+# chp2prs
+echo
+echo "#### Building chp2prs ####"
+(cd chp2prs; make depend && make && make install)
+
+#
+# dflowmap
+echo
+echo "#### Building chp2prs ####"
+(cd dflowmap; ./build.sh; cd build; make install)
