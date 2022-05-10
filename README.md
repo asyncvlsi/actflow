@@ -9,7 +9,7 @@ library.
 The Galois library depends on the following:
 
 * A modern C++ compiler compliant with the C++-17 standard (gcc >= 7, Intel >= 19.0.1, clang >= 7.0)
-* CMake (>= 3.13)
+* CMake (>= 3.16)
 * Boost library (>= 1.71.0, we recommend building/installing the full library)
 * libllvm (>= 7.0 with RTTI support)
 * libfmt (>= 4.0)
