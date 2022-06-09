@@ -37,3 +37,9 @@
 [submodule "dflowmap"]
 	path = dflowmap
 	url = https://github.com/asyncvlsi/dflowmap
+[submodule "expropt"]
+	path = expropt
+	url = https://github.com/asyncvlsi/expropt
+[submodule "actsim"]
+	path = actsim
+	url = https://github.com/asyncvlsi/actsim
