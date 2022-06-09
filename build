@@ -34,7 +34,11 @@ cmake_build_bipart() {
 echo "Applying patch to Galois library..."
 if [ ! -f patched ]
 then
-   (cd Galois; patch -p0 < ../extra/Galois)
+   (cd Galois; 
+     patch -p0 < ../extra/Galois;
+     patch -p0 < ../extra/Galois2;
+     patch -p0 < ../extra/Galois3
+   )
    touch patched
 fi
 

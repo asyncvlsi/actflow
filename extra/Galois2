@@ -1,0 +1,11 @@
+--- CMakeLists.txt	2022-06-09 14:03:37.000000000 -0400
++++ CMakeLists.txt.new	2022-06-09 14:03:35.000000000 -0400
+@@ -218,7 +218,7 @@
+ add_subdirectory(libpangolin)
+ 
+ # Applications (apps)
+-add_subdirectory(lonestar)
++#add_subdirectory(lonestar)
+ 
+ add_subdirectory(scripts)
+ add_subdirectory(inputs)
