@@ -32,7 +32,11 @@ cmake_build_bipart() {
 # Apply patches
 #
 echo "Applying patch to Galois library..."
-(cd Galois; patch -p0 < ../extra/Galois)
+if [ ! -f patched ]
+then
+   (cd Galois; patch -p0 < ../extra/Galois)
+   touch patched
+fi
 
 #
 # Build and install the ACT library
@@ -62,6 +66,12 @@ echo
 # phyDB
 cmake_build phyDB
 
+# layout
+echo
+echo "#### Building layout ####"
+echo
+(cd layout; make depend && make && make install)
+
 # BiPart
 cmake_build_bipart
 
@@ -86,16 +96,32 @@ echo
 # stdlib
 echo 
 echo "#### Installing ACT std lib ####"
+echo
 (cd stdlib; make install)
+
+
+# expropt
+echo
+echo "#### Building expropt ####"
+echo
+(cd expropt; ./configure; make depend && make && make install)
 
 #
 # chp2prs
 echo
 echo "#### Building chp2prs ####"
-(cd chp2prs; make depend && make && make install)
+echo
+(cd chp2prs; ./configure; make depend && make && make install)
 
 #
 # dflowmap
 echo
 echo "#### Building chp2prs ####"
+echo
 (cd dflowmap; ./build.sh; cd build; make install)
+
+# actsim
+echo 
+echo "#### Building actsim ####"
+echo 
+(cd actsim; ./configure; make depend && make && make install)

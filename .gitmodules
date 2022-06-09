@@ -43,3 +43,6 @@
 [submodule "actsim"]
 	path = actsim
 	url = https://github.com/asyncvlsi/actsim
+[submodule "layout"]
+	path = layout
+	url = https://github.com/asyncvlsi/layout
