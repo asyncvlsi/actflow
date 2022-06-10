@@ -9,7 +9,7 @@ echo "*** act ***"
 echo "*** lefdef ***"
 (cd lefdef; make clean)
 
-for i in Galois phyDB BiPart Dali PWRoute SPRoute TritonRoute-WXL
+for i in Galois phyDB BiPart Dali PWRoute SPRoute TritonRoute-WXL dflowmap
 do
 	echo "*** $i ***"
 	(cd $i; rm -rf build)
@@ -17,3 +17,12 @@ done
 
 echo "*** interact ***"
 (cd interact; make realclean)
+
+echo "*** layout ***"
+(cd layout; make realclean)
+
+echo "*** expropt ***"
+(cd expropt; make realclean)
+
+echo "*** actsim ***"
+(cd actsim; make realclean)
