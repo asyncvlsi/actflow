@@ -22,7 +22,9 @@ The ACT library depends on the following:
 * The system should have zlib installed
 * The system should have the macro pre-processing package m4 installed
 
-The expression optimization library requires [yosys](https://github.com/YosysHQ/yosys) to be installed on your system. While this does not impact building the flow, logic optimization launches the `yosys` executable and will fail if it cannot find the executable.
+The expression optimization library requires [yosys](https://github.com/YosysHQ/yosys) to be installed on your system.
+While this does not impact building the flow, logic optimization launches the `yosys` executable and will fail if it cannot find the executable. 
+The README provided by yosys has detailed installation instructions.
 
 
 ## Steps
