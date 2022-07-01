@@ -1,48 +1,64 @@
 [submodule "act"]
 	path = act
 	url = http://github.com/asyncvlsi/act
+	branch = master
 [submodule "phyDB"]
 	path = phyDB
 	url = http://github.com/asyncvlsi/phyDB
+	branch = main
 [submodule "Dali"]
 	path = Dali
 	url = http://github.com/asyncvlsi/Dali
+	branch = main
 [submodule "BiPart"]
 	path = BiPart
 	url = http://github.com/asyncvlsi/BiPart
+	branch = main
 [submodule "SPRoute"]
 	path = SPRoute
 	url = http://github.com/asyncvlsi/SPRoute
+	branch = master
 [submodule "PWRoute"]
 	path = PWRoute
 	url = http://github.com/asyncvlsi/PWRoute
+	branch = master
 [submodule "interact"]
 	path = interact
 	url = http://github.com/asyncvlsi/interact
+	branch = main
 [submodule "Galois"]
 	path = Galois
 	url = https://github.com/IntelligentSoftwareSystems/Galois
+	branch = master
 [submodule "lefdef"]
 	path = lefdef
 	url = https://github.com/asyncvlsi/lefdef
+	branch = main
 [submodule "TritonRoute-WXL"]
 	path = TritonRoute-WXL
 	url = https://github.com/asyncvlsi/TritonRoute-WXL
+	branch = master
 [submodule "stdlib"]
 	path = stdlib
 	url = http://github.com/asyncvlsi/stdlib
+	branch = main
 [submodule "chp2prs"]
 	path = chp2prs
 	url = https://github.com/asyncvlsi/chp2prs
+	branch = master
 [submodule "dflowmap"]
 	path = dflowmap
 	url = https://github.com/asyncvlsi/dflowmap
+	branch = main
 [submodule "expropt"]
 	path = expropt
 	url = https://github.com/asyncvlsi/expropt
+	branch = main
 [submodule "actsim"]
 	path = actsim
 	url = https://github.com/asyncvlsi/actsim
+	branch = master
 [submodule "layout"]
 	path = layout
 	url = https://github.com/asyncvlsi/layout
+	branch = master
