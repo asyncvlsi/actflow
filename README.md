@@ -41,6 +41,6 @@ If you'd like to delete all the files generated during the build process, run `.
 
 ## References
 
-If you use this flow, we would appreciate a citation to the following overview paper that summarizes the flow:
+If you use this flow for a publication, we would appreciate a citation to the following overview paper that summarizes the flow:
 
    * S. Ataei et al., "An Open-Source EDA Flow for Asynchronous Logic," in IEEE Design & Test, vol. 38, no. 2, pp. 27-37, April 2021, doi: 10.1109/MDAT.2021.3051334.
