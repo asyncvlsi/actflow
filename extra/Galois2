@@ -1,5 +1,5 @@
---- CMakeLists.txt	2022-07-12 09:57:11.000000000 -0400
-+++ CMakeLists.txt.new	2022-07-12 09:58:46.000000000 -0400
+--- CMakeLists.txt	2022-07-12 11:01:51.000000000 -0400
++++ CMakeLists.txt.new	2022-07-12 11:01:46.000000000 -0400
 @@ -154,17 +154,17 @@
  
  find_package(Boost 1.58.0 REQUIRED COMPONENTS serialization iostreams)
@@ -29,8 +29,12 @@
  
  include(HandleSanitizer)
  
-@@ -213,11 +213,11 @@
- add_subdirectory(libpangolin)
+@@ -210,14 +210,14 @@
+ 
+   add_subdirectory(libgpu)
+ endif()
+-add_subdirectory(libpangolin)
++#add_subdirectory(libpangolin)
  
  # Applications (apps)
 -add_subdirectory(lonestar)
