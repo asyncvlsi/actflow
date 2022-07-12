@@ -6,12 +6,6 @@ then
         exit 1
 fi
 
-if [ x$LLVM_DIR = x ]
-then
-	echo "Please set the environment variavble LLVM_DIR to the directory containing LLVMConfig.cmake"
-	exit 1
-fi
-
 cmake_build() {
   dir=$1
   echo 
