@@ -11,7 +11,7 @@ cmake_build() {
   echo 
   echo "#### Building and installing package: $1 ####"
   echo
-  (cd $dir; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME .. && make && make install)
+  (cd $dir; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME .. && make && make install) || exit 1
 }
 
 cmake_build_bipart() {
@@ -19,7 +19,7 @@ cmake_build_bipart() {
   echo
   echo "#### Building and installing package: Bipart ####"
   echo
-  (cd BiPart; if [ ! -d build ]; then mkdir build; fi; cd build; LEF_ROOT=$ACT_HOME GALOIS_INCLUDE=$ACT_HOME/include GALOIS_LIB=$ACT_HOME/lib DEF_ROOT=$ACT_HOME cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME ..  && make && make install)
+  (cd BiPart; if [ ! -d build ]; then mkdir build; fi; cd build; LEF_ROOT=$ACT_HOME GALOIS_INCLUDE=$ACT_HOME/include GALOIS_LIB=$ACT_HOME/lib DEF_ROOT=$ACT_HOME cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME ..  && make && make install) || exit 1
 }
 
 #
@@ -43,12 +43,16 @@ echo
 echo "####  Building and installing the core ACT library ####"
 echo
 export VLSI_TOOLS_SRC=`pwd`/act
-(cd act; ./configure $ACT_HOME; ./build; make install)
+(cd act; ./configure $ACT_HOME; ./build; make install) || exit 1
 
 #
 # Build and install the Galois library
 #
 cmake_build Galois
+if [ -f $ACT_HOME/lib64/libgalois_shmem.a -a ! -f $ACT_HOME/lib/libgalois_shmem.a ]
+then
+   ln -s $ACT_HOME/lib64/libgalois_shmem.a $ACT_HOME/lib/libgalois_shmem.a
+fi
 
 #
 # Build and install the LEF/DEF library
@@ -56,7 +60,7 @@ cmake_build Galois
 echo
 echo "####  Building and installing the LEF/DEF parser ####"
 echo
-(cd lefdef; make && make install)
+(cd lefdef; make && make install) || exit 1
 
 #
 # Build and install... 
@@ -68,7 +72,7 @@ cmake_build phyDB
 echo
 echo "#### Building layout ####"
 echo
-(cd layout; make depend && make && make install)
+(cd layout; make depend && make && make install) || exit 1
 
 # BiPart
 cmake_build_bipart
@@ -89,37 +93,37 @@ cmake_build TritonRoute-WXL
 echo
 echo "#### Building interact ####"
 echo
-(cd interact; ./configure; make depend && make && make install)
+(cd interact; ./configure; make depend && make && make install) || exit 1
 
 # stdlib
 echo 
 echo "#### Installing ACT std lib ####"
 echo
-(cd stdlib; make install)
+(cd stdlib; make install) || exit 1
 
 
 # expropt
 echo
 echo "#### Building expropt ####"
 echo
-(cd expropt; ./configure; make depend && make && make install)
+(cd expropt; ./configure; make depend && make && make install) || exit 1
 
 #
 # chp2prs
 echo
 echo "#### Building chp2prs ####"
 echo
-(cd chp2prs; ./configure; make depend && make && make install)
+(cd chp2prs; ./configure; make depend && make && make install) || exit 1
 
 #
 # dflowmap
 echo
 echo "#### Building chp2prs ####"
 echo
-(cd dflowmap; ./build.sh; cd build; make install)
+(cd dflowmap; ./build.sh; cd build; make install) || exit 1
 
 # actsim
 echo 
 echo "#### Building actsim ####"
 echo 
-(cd actsim; ./configure; make depend && make && make install)
+(cd actsim; ./configure; make depend && make && make install) || exit 1
