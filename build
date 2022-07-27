@@ -31,7 +31,8 @@ then
    (cd Galois; 
      patch -p0 < ../extra/Galois;
      patch -p0 < ../extra/Galois2;
-     patch -p0 < ../extra/Galois3
+     patch -p0 < ../extra/Galois3;
+     patch -p0 < ../extra/Galois4
    )
    touch patched
 fi

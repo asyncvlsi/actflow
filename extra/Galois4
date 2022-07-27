@@ -1,0 +1,12 @@
+--- libgalois/src/HWTopoDarwin.cpp	2022-07-27 06:12:15.000000000 -0400
++++ libgalois/src/HWTopoDarwin.cpp.new	2022-07-27 06:12:33.000000000 -0400
+@@ -119,8 +119,8 @@
+   if (thread_policy_set(machThread, THREAD_AFFINITY_POLICY,
+                         thread_policy_t(&policy),
+                         THREAD_AFFINITY_POLICY_COUNT)) {
+-    galois::gWarn("Could not set CPU affinity to ", osContext, " (",
+-                  strerror(errno), ")");
++    //galois::gWarn("Could not set CPU affinity to ", osContext, " (",
++    //              strerror(errno), ")");
+     return false;
+   }
