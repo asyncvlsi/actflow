@@ -24,5 +24,8 @@ echo "*** layout ***"
 echo "*** expropt ***"
 (cd expropt; make realclean)
 
+echo "*** chp2prs ***"
+(cd chp2prs; make realclean)
+
 echo "*** actsim ***"
 (cd actsim; make realclean)

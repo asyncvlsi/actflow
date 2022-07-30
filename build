@@ -119,7 +119,7 @@ echo
 #
 # dflowmap
 echo
-echo "#### Building chp2prs ####"
+echo "#### Building dflowmap ####"
 echo
 (cd dflowmap; ./build.sh; cd build; make install) || exit 1
 
