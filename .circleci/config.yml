@@ -1,0 +1,449 @@
+version: 2.2
+
+jobs:
+   build-centos7:
+     docker:
+     # use an old image for compatibity of binaries
+       - image: centos:7.2.1511
+     steps:
+       - run: yum install git ca-certificates  -y
+       - checkout
+       - run: 
+          name: get sources
+          command: |
+              git submodule sync --recursive
+              git submodule update --init --recursive
+       - run:
+          name: check build tools
+          command: |
+               set +e
+               date
+               bash packaging/centos7_install_build_system.sh
+               source packaging/centos7_ci_build_environment.sh
+       - run: 
+          name: pack sources
+          command: |
+              source packaging/centos7_ci_build_environment.sh
+              bash packaging/001-pack_sources.sh
+       - run: 
+          name: get dependencies
+          command: |
+              source packaging/centos7_ci_build_environment.sh
+              bash packaging/002-get_dependencies.sh
+       - run: 
+          name: build
+          command: |
+              source packaging/centos7_ci_build_environment.sh
+              bash packaging/003-build.sh
+       - run: 
+          name: copy licenses
+          command: |
+              source packaging/centos7_ci_build_environment.sh
+              bash packaging/004-copy_licenses.sh
+       - run: 
+          name: package
+          command: |
+              source packaging/centos7_ci_build_environment.sh
+              bash packaging/005-pack_binaries.sh
+       - persist_to_workspace:
+          root: ./
+          paths:
+            - packaging/release_description.md
+            - packaging/release_titel.md
+            - packaging/README-package.md
+            - actflow_*.tar.gz
+
+       
+   # package and upload
+   upload-github-release:
+    docker:
+      - image: cimg/go:1.19
+    steps:
+      - attach_workspace:
+          at: ./
+      - run:
+          name: "Upload on Release on GitHub"
+          command: |  
+            mkdir upload
+            mv *tar.gz upload
+            cp packaging/README-package.md upload/README.md
+            go install github.com/tcnksm/ghr@latest
+            RELEASE_VERSION="rowling"
+            RELEASE_TITEL=$(head -n 1 packaging/release_titel.md)
+            RELEASE_BODY=$(head -n 1 packaging/release_description.md)
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -n "${RELEASE_TITEL}" -b "${RELEASE_BODY}" -delete ${RELEASE_VERSION} ./upload/
+
+   test-centos7:
+     docker:
+       - image: centos:7.2.1511
+     resource_class: small
+     steps:
+       - run: 
+          name: install test runner
+          command: |
+               yum install -y make
+       - attach_workspace:
+          at: ./
+       - run:
+          name: restore src
+          command: |
+              tar -xf actflow_sources*.tar.gz
+       - run: 
+          name: test binaries
+          command: |
+              mkdir install
+              tar -C install -xvf actflow_package*.tar.gz 
+              export ACT_HOME=$(pwd)/install/act
+              bash packaging/006-test.sh              
+       
+   test-rhel8:
+     docker:
+       - image: rockylinux/rockylinux:8
+     resource_class: small
+     steps:
+       - run: 
+          name: install test runner
+          command: |
+                  yum install -y 'dnf-command(config-manager)'
+                  yum config-manager --set-enabled powertools -y
+                  # cmp (diffutils) and make are required for running tests 
+                  yum install -y make diffutils gzip tar
+       - attach_workspace:
+          at: ./
+       - run:
+          name: restore src
+          command: |
+              tar -xf actflow_sources*.tar.gz 
+       - run: 
+          name: test binaries
+          command: |
+              mkdir install
+              tar -C install -xf actflow_package*.tar.gz 
+              export ACT_HOME=$(pwd)/install/act
+              bash packaging/006-test.sh      
+              
+   test-opensuse15:
+     docker:
+       - image: opensuse/leap:15
+     resource_class: small
+     steps:
+       - run: 
+          name: install test runner
+          command: |
+                  zypper in -y make tar gzip
+       - attach_workspace:
+          at: ./
+       - run:
+          name: restore src
+          command: |
+              tar -xf actflow_sources*.tar.gz 
+       - run: 
+          name: test binaries
+          command: |
+              mkdir install
+              tar -C install -xf actflow_package*.tar.gz 
+              export ACT_HOME=$(pwd)/install/act
+              bash packaging/006-test.sh      
+              
+   test-ubuntu18:
+     docker:
+       - image: ubuntu:18.04
+     resource_class: small
+     steps:
+       - run: 
+          name: install test runner
+          command: |
+            apt-get -q update -y
+                apt-get -q install -y make
+       - attach_workspace:
+          at: ./
+       - run:
+          name: restore src
+          command: |
+              tar -xf actflow_sources*.tar.gz 
+       - run: 
+          name: test binaries
+          command: |
+              mkdir install
+              tar -C install -xf actflow_package*.tar.gz 
+              export ACT_HOME=$(pwd)/install/act
+              bash packaging/006-test.sh      
+              
+   test-ubuntu20:
+     docker:
+       - image: ubuntu:20.04
+     resource_class: small
+     steps:
+       - run: 
+          name: install test runner
+          command: |
+                apt-get -q update -y
+                apt-get -q install -y make
+       - attach_workspace:
+          at: ./
+       - run:
+          name: restore src
+          command: |
+              tar -xf actflow_sources*.tar.gz 
+       - run: 
+          name: test binaries
+          command: |
+              mkdir install
+              tar -C install -xf actflow_package*.tar.gz 
+              export ACT_HOME=$(pwd)/install/act
+              bash packaging/006-test.sh      
+              
+   test-ubuntu22:
+     docker:
+       - image: ubuntu:22.04
+     resource_class: small
+     steps:
+       - run: 
+          name: install test runner
+          command: |
+                apt-get -q update -y
+                apt-get -q install -y make
+       - attach_workspace:
+          at: ./
+       - run:
+          name: restore src
+          command: |
+              tar -xf actflow_source*.tar.gz 
+       - run: 
+          name: test binaries
+          command: |
+              mkdir install
+              tar -C install -xf actflow_package*.tar.gz 
+              export ACT_HOME=$(pwd)/install/act
+              bash packaging/006-test.sh      
+              
+   test-ubuntu16:
+     docker:
+       - image: ubuntu:16.04
+     resource_class: small
+     steps:
+       - run: 
+          name: install test runner
+          command: |
+                apt-get -q update -y
+                apt-get -q install -y make
+       - attach_workspace:
+          at: ./
+       - run:
+          name: restore src
+          command: |
+              tar -xf actflow_sources*.tar.gz 
+       - run: 
+          name: test binaries
+          command: |
+              mkdir install
+              tar -C install -xf actflow_package*.tar.gz 
+              export ACT_HOME=$(pwd)/install/act
+              bash packaging/006-test.sh      
+              
+   test-debian-stable:
+     docker:
+       - image: debian:stable
+     resource_class: small
+     steps:
+       - run: 
+          name: install test runner
+          command: |
+                apt-get -q update -y
+                apt-get -q install -y make
+       - attach_workspace:
+          at: ./
+       - run:
+          name: restore src
+          command: |
+              tar -xf actflow_sources*.tar.gz 
+       - run: 
+          name: test binaries
+          command: |
+              mkdir install
+              tar -C install -xf actflow_package*.tar.gz 
+              export ACT_HOME=$(pwd)/install/act
+              bash packaging/006-test.sh      
+
+   test-debian-oldstable:
+     docker:
+       - image: debian:oldstable
+     resource_class: small
+     steps:
+       - run: 
+          name: install test runner
+          command: |
+                apt-get -q update -y
+                apt-get -q install -y make
+       - attach_workspace:
+          at: ./
+       - run:
+          name: restore src
+          command: |
+              tar -xf actflow_sources*.tar.gz 
+       - run: 
+          name: test binaries
+          command: |
+              mkdir install
+              tar -C install -xf actflow_package*.tar.gz 
+              export ACT_HOME=$(pwd)/install/act
+              bash packaging/006-test.sh      
+              
+   test-debian-oldoldstable:
+     docker:
+       - image: debian:oldoldstable
+     resource_class: small
+     steps:
+       - run: 
+          name: install test runner
+          command: |
+                apt-get -q update -y
+                apt-get -q install -y make
+       - attach_workspace:
+          at: ./
+       - run:
+          name: restore src
+          command: |
+              tar -xf actflow_sources*.tar.gz 
+       - run: 
+          name: test binaries
+          command: |
+              mkdir install
+              tar -C install -xf actflow_package*.tar.gz 
+              export ACT_HOME=$(pwd)/install/act
+              bash packaging/006-test.sh      
+              
+   test-fedora-20:
+     docker:
+       - image: fedora:20
+     resource_class: small
+     steps:
+       - run: 
+          name: install test runner
+          command: |
+                yum install -y make
+       - attach_workspace:
+          at: ./
+       - run:
+          name: restore src
+          command: |
+              tar -xf actflow_sources*.tar.gz 
+       - run: 
+          name: test binaries
+          command: |
+              mkdir install
+              tar -C install -xf actflow_package*.tar.gz 
+              export ACT_HOME=$(pwd)/install/act
+              bash packaging/006-test.sh      
+              
+   test-fedora-latest:
+     docker:
+       - image: fedora:latest
+     resource_class: small
+     steps:
+       - run: 
+          name: install test runner
+          command: |
+                dnf install -y make diffutils
+       - attach_workspace:
+          at: ./
+       - run:
+          name: restore src
+          command: |
+              tar -xf actflow_sources*.tar.gz 
+       - run: 
+          name: test binaries
+          command: |
+              mkdir install
+              tar -C install -xf actflow_package*.tar.gz 
+              export ACT_HOME=$(pwd)/install/act
+              bash packaging/006-test.sh      
+              
+   test-archlinux:
+     docker:
+       - image: archlinux/archlinux:latest
+     resource_class: small
+     steps:
+       - run: 
+          name: install test runner
+          command: |
+              pacman-key --init
+              pacman --noconfirm -Syy
+              # cmp (diffutils) and make are required for running tests
+              pacman --noconfirm -S make diffutils
+       - attach_workspace:
+          at: ./
+       - run:
+          name: restore src
+          command: |
+              tar -xf actflow_sources*.tar.gz 
+       - run: 
+          name: test binaries
+          command: |
+              mkdir install
+              tar -C install -xf actflow_package*.tar.gz 
+              export ACT_HOME=$(pwd)/install/act
+              bash packaging/006-test.sh      
+                       
+
+workflows:
+   version: 2
+   build:
+     jobs: 
+        -  build-centos7
+        -  test-centos7:
+             requires:
+               - build-centos7
+        -  test-rhel8:
+             requires:
+               - build-centos7
+        -  test-debian-stable:
+             requires:
+               - build-centos7
+        -  test-debian-oldstable:
+             requires:
+               - build-centos7
+        -  test-debian-oldoldstable:
+             requires:
+               - build-centos7
+        -  test-ubuntu22:
+             requires:
+               - build-centos7
+        -  test-ubuntu20:
+             requires:
+               - build-centos7   
+        -  test-ubuntu18:
+             requires:
+               - build-centos7
+        -  test-ubuntu16:
+             requires:
+               - build-centos7  
+        -  test-opensuse15:
+             requires:
+               - build-centos7 
+        -  test-archlinux:
+             requires:
+               - build-centos7 
+        -  test-fedora-20:
+             requires:
+               - build-centos7 
+        -  test-fedora-latest:
+             requires:
+               - build-centos7
+        -  upload-github-release:
+             requires:
+               - build-centos7
+               - test-centos7
+               - test-rhel8
+               - test-debian-stable
+               - test-debian-oldstable
+               - test-debian-oldoldstable
+               - test-ubuntu22
+               - test-ubuntu20
+               - test-ubuntu18
+               - test-ubuntu16
+               - test-opensuse15
+               - test-archlinux
+               - test-fedora-20
+               - test-fedora-latest
+              

@@ -4,7 +4,20 @@ This repository contains the key modules required to use the ACT implementation 
 The parallel algorithms used in the implemention flow use a combination of OpenMP and the [Galois](https://github.com/IntelligentSoftwareSystems/Galois)
 library. 
 
-## Dependencies
+## Install from prebuild package
+
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/bics-rug/yale-asyncvlsi-actflow/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/bics-rug/yale-asyncvlsi-actflow/tree/main)
+
+download the latest release from https://github.com/bics-rug/yale-asyncvlsi-actflow/releases and extract it with `tar -xpf actflow_<commit>_<date>.tar.gz`, move the act folder to your prefered install location and
+set in your shell (this is for bash, setenv works eqiv.)
+```
+export ACT_HOME=<path to extracted act folder>
+export PATH=${ACT_HOME}/bin:${PATH}
+```
+
+and start working with it!
+
+## Dependencies for building
 
 The Galois library depends on the following:
 
@@ -38,8 +51,14 @@ This should build and install all the libraries and tools needed.
 
 If you'd like to delete all the files generated during the build process, run `./clean`
 
+you can test a subsection of the tools by running `./test` to test your install
+
 ## References
 
 If you use this flow for a publication, we would appreciate a citation to the following overview paper that summarizes the flow:
 
    * S. Ataei, Wenmian Hua, Yihang Yang, Rajit Manohar, Yi-Shan Lu, Jiayuan He, Sepideh Maleki, Keshav Pingali, "An Open-Source EDA Flow for Asynchronous Logic," in IEEE Design & Test, vol. 38, no. 2, pp. 27-37, April 2021, doi: 10.1109/MDAT.2021.3051334.
+
+## Packaging
+
+for packaging and CI info see [README packaging](packaging/README.md)
