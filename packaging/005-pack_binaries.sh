@@ -28,7 +28,7 @@ fi
 
 # move to the folder above act_home so the pathes inside the tar are nice
 WORK_DIR=$(pwd)
-mv packaging/README-package.md $ACT_HOME/README.md
+mv packaging/README_package.md $ACT_HOME/README.md
 mv actflow_build_* $ACT_HOME/
 cd $ACT_HOME/..
 tar -czf $WORK_DIR/actflow_package_${CIRCLE_SHA1:0:6}_$(date '+%Y-%m-%d').tar.gz $(realpath --relative-to ./ $ACT_HOME)

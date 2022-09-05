@@ -23,6 +23,7 @@ echo
 mv $ACT_HOME ${ACT_HOME}_test
 ACT_HOME_PREV=$ACT_HOME
 export ACT_HOME=${ACT_HOME}_test
+export TERMINFO=${ACT_HOME}/share/terminfo
 
 # run test
 bash test || exit 1

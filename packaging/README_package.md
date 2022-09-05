@@ -33,7 +33,6 @@ it was verified to be working out of the box on the following systems, no additi
  - Debian 9/10/11
  - Ubuntu 16.04/18.04/20.04/22.04
  - OpenSUSE 15
- - ArchLinux
  - Fedora 20/latest
 
 should also work on other systems with kernel 3.10+ (libc version) and GNU linker ld or compatible, like BSD OSes (but not tested).
@@ -45,11 +44,13 @@ just set in your shell (this is for bash, setenv works eqiv.)
 ```
 export ACT_HOME=<path to extracted act folder>
 export PATH=${ACT_HOME}/bin:${PATH}
+export TERMINFO=${ACT_HOME}/share/terminfo
 ```
 or execute in the folder you extracted the tar in, so the folder that than has a single new folder called act after extraction!
 ```
 export ACT_HOME=$(pwd)/act
 export PATH=${ACT_HOME}/bin:${PATH}
+export TERMINFO=${ACT_HOME}/share/terminfo
 ```
 
 and start working with it!
