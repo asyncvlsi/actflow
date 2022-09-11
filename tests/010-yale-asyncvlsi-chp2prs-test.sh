@@ -14,7 +14,7 @@
 #
 
 echo 
-echo "#### chp2prs test ####"
+echo "#### chp2prs linker test ####"
 echo
 
 source tests/test_helper.sh
@@ -31,12 +31,6 @@ cd $EDA_SRC/chp2prs
 
 # fix to run make test from unconfigured sources
 touch $EDA_SRC/chp2prs/config.mk
-
-sed -i 's/.\/run_expr.sh/.\/run_expr.sh || exit 1/' test/run.sh
-sed -i 's/.\/run_expr_qdiopt.sh yosys/.\/run_expr_qdiopt.sh yosys || exit 1/' test/run.sh
-sed -i 's/.\/run_expr_bdopt.sh yosys/.\/run_expr_bdopt.sh yosys || exit 1/' test/run.sh
-sed -i 's/.\/run_expr_qdiopt.sh genus/.\/run_expr_qdiopt.sh yosys || exit 1/' test/run.sh
-sed -i 's/.\/run_expr_bdopt.sh genus/.\/run_expr_bdopt.sh yosys || exit 1/' test/run.sh
 
 make runtest || exit 1
 

@@ -14,7 +14,7 @@
 #
 
 echo 
-echo "#### actsim test ####"
+echo "#### actsim linker test ####"
 echo
 
 source tests/test_helper.sh
@@ -30,15 +30,6 @@ cd $EDA_SRC/actsim
 
 # fix to run make test from unconfigured sources
 touch $EDA_SRC/actsim/config.mk
-
-sed -i 's/ACTTOOL=..\/actsim.$EXT/ACTTOOL=actsim/' test/run_inf.sh
-sed -i 's/ACTTOOL=..\/actsim.$EXT/ACTTOOL=actsim/' test/run_num.sh
-sed -i 's/ACTTOOL=..\/actsim.$EXT/ACTTOOL=actsim/' test/validate_inf.sh
-sed -i 's/ACTTOOL=..\/actsim.$EXT/ACTTOOL=actsim/' test/validate_num.sh
-
-sed -i 's/runtest: all/runtest:/' ext/Makefile
-sed -i 's/runtestsub: all/runtestsub:/' ext/Makefile
-
 
 make runtest || exit 1
 

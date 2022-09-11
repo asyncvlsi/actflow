@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# @TODO fix upstream
-sed -i 's/$(CXX)/$(CXX) $(SH_EXE_OPTIONS)/' actsim/Makefile 
-
 # call the repo build script
 bash $EDA_SRC/build || exit 1
 

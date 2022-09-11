@@ -1,1 +1,1 @@
-Asynchronus Circuit Toolkit drop in Linux install
+Asynchronus Circuit Toolkit drop in 64bit Linux install

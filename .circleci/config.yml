@@ -74,7 +74,7 @@ jobs:
             RELEASE_VERSION="rowling"
             RELEASE_TITEL=$(head -n 1 packaging/release_titel.md)
             RELEASE_BODY=$(head -n 1 packaging/release_description.md)
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -n "${RELEASE_TITEL}" -b "${RELEASE_BODY}" -delete ${RELEASE_VERSION} ./upload/
+            ghr -t ${GITHUB_TOKEN} -u ${GITHUB_USER} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -n "${RELEASE_TITEL}" -b "${RELEASE_BODY}" -delete ${RELEASE_VERSION} ./upload/
 
    test-centos7:
      docker:
@@ -424,10 +424,9 @@ workflows:
         -  test-opensuse15:
              requires:
                - build-centos7 
-        # the shell somehow loads our libreadline and cant find up
-        #-  test-archlinux:
-        #     requires:
-        #       - build-centos7 
+        -  test-archlinux:
+             requires:
+               - build-centos7 
         -  test-fedora-20:
              requires:
                - build-centos7 
@@ -447,7 +446,11 @@ workflows:
                - test-ubuntu18
                - test-ubuntu16
                - test-opensuse15
-               #- test-archlinux
+               - test-archlinux
                - test-fedora-20
                - test-fedora-latest
+             filters:
+               branches:
+                 only:
+                   - main
               

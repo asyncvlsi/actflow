@@ -39,6 +39,7 @@ fi
 
 cp $VLSI_TOOLS_SRC/LICENSE $ACT_HOME/license/LICENSE_yale-asyncvlsi-act
 cp $EDA_SRC/actsim/LICENSE $ACT_HOME/license/LICENSE_yale-asyncvlsi-actsim
+cp $EDA_SRC/actsim/ext/LICENSE.OTHER $ACT_HOME/license/LICENSE_yale-asyncvlsi-actsim-ext
 cp $EDA_SRC/BiPart/LICENSE $ACT_HOME/license/LICENSE_yale-asyncvlsi-BiPart
 cp $EDA_SRC/chp2prs/LICENSE $ACT_HOME/license/LICENSE_yale-asyncvlsi-chp2prs
 cp $EDA_SRC/Dali/LICENSE $ACT_HOME/license/LICENSE_yale-asyncvlsi-Dali

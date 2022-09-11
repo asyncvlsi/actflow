@@ -14,10 +14,11 @@
 #
 
 echo 
-echo "#### dali test ####"
+echo "#### dali linker test ####"
 echo
 
 source tests/test_helper.sh
 
 lookup_binary "dali"
 
+# ctest unit tests are run on build, cant be run in install tree

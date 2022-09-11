@@ -6,13 +6,14 @@ library.
 
 ## Install from prebuild package
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/bics-rug/yale-asyncvlsi-actflow/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/bics-rug/yale-asyncvlsi-actflow/tree/main)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/asyncvlsi/actflow/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/asyncvlsi/actflow/tree/main)
 
-download the latest release from https://github.com/bics-rug/yale-asyncvlsi-actflow/releases and extract it with `tar -xpf actflow_<commit>_<date>.tar.gz`, move the act folder to your prefered install location and
+download the latest release from https://github.com/asyncvlsi/actflow/releases and extract it with `tar -xpf actflow_<commit>_<date>.tar.gz`, move the act folder to your prefered install location and
 set in your shell (this is for bash, setenv works eqiv.)
 ```
 export ACT_HOME=<path to extracted act folder>
 export PATH=${ACT_HOME}/bin:${PATH}
+export TERMINFO=${ACT_HOME}/share/terminfo
 ```
 
 and start working with it!

@@ -27,19 +27,20 @@ contains all the actflow tools:
  - skywater 130 (technology)
  - stdlib (library)
 
-it was verified to be working out of the box on the following systems, no additional dependencies:
+it was verified to be working out of the box on the following 64bit systems, no additional dependencies:
  - CentOS/RHEL/Oracle Linux 7.2+
  - RHEL/RockyLinux/AlmaLinux/Oracle Linux 8
  - Debian 9/10/11
  - Ubuntu 16.04/18.04/20.04/22.04
  - OpenSUSE 15
+ - ArchLinux
  - Fedora 20/latest
 
-should also work on other systems with kernel 3.10+ (libc version) and GNU linker ld or compatible, like BSD OSes (but not tested).
+should also work on other 64 bit systems with kernel 3.10+ (libc version) and GNU linker ld or compatible, also BSD OSes with an equiv libc/pthread/... versions (but not tested).
 
 ## install
 
-download the latest release from https://github.com/bics-rug/yale-asyncvlsi-actflow/releases and extract it with `tar -xpf actflow_<commit>_<date>.tar.gz`, move the act folder to you prefered install location and
+download the latest release from https://github.com/bics-rug/yale-asyncvlsi-actflow/releases and extract it with `tar -xpf actflow_package_<commit>_<date>.tar.gz`, move the act folder to you prefered install location and
 just set in your shell (this is for bash, setenv works eqiv.)
 ```
 export ACT_HOME=<path to extracted act folder>
@@ -55,12 +56,28 @@ export TERMINFO=${ACT_HOME}/share/terminfo
 
 and start working with it!
 
-#### notes / trouble shooting: 
+for the GUI applications you need X11 and libGLU installed.
+
+## References
+
+If you use this flow for a publication, we would appreciate a citation to the following overview paper that summarizes the flow:
+
+   * S. Ataei, Wenmian Hua, Yihang Yang, Rajit Manohar, Yi-Shan Lu, Jiayuan He, Sepideh Maleki, Keshav Pingali, "An Open-Source EDA Flow for Asynchronous Logic," in IEEE Design & Test, vol. 38, no. 2, pp. 27-37, April 2021, doi: 10.1109/MDAT.2021.3051334.
+
+
+## notes / trouble shooting: 
+### nested folder in extraction (eg. interact not found)
 some extraction tools create a folder with the name of the tar file around, you need to point $ACT_HOME to the `act` folder inside.
 
-if you are on an OS that does not support loading of relativ path .so files (eg. you get lib[...].so not found), move the act folder to `/opt/act` or try setting `export LD_LIBRARY_PATH=$ACT_HOME/lib:${LD_LIBRARY_PATH}` note that newer OSes ignore this setting during the start of the program.
+### shared object loading (eg. lib[...].so not found)
+if you are on an OS that does not support loading of relativ path .so files (eg. you get lib[...].so not found), 
+ - move the act folder to `/opt/act` as this is the fall back hardcoded install path,
+ - or try setting `export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$ACT_HOME/lib`,  note that newer OSes ignore `LD_LIBRARY_PATH` setting during the start of the program.
+      - if this does not help use `export LD_LIBRARY_PATH=$ACT_HOME/lib:${LD_LIBRARY_PATH}` this might break other programs in your OS.
 
-for the custom function/lib loading during runtime, you need to set `export LD_LIBRARY_PATH=.:$ACT_HOME/lib:${LD_LIBRARY_PATH}` to load libs from your current folder and $ACT_HOME. This is covered by the dl test case in act.
+### loading custom functions into act on runtime
+for the custom function/lib loading during runtime in act and actsim, act looks at LD_LIBRARY_PATH, you need to set `export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:.:$ACT_HOME/lib` to load libs from your current folder and $ACT_HOME. This is covered by the dl test case in act.
+
 ## bugs or problems:
 
 please file bugs and feature requests at https://github.com/asyncvlsi/actflow

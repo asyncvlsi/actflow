@@ -14,10 +14,11 @@
 #
 
 echo 
-echo "#### dflowmap test ####"
+echo "#### dflowmap linker test ####"
 echo
 
 source tests/test_helper.sh
 
 lookup_binary "dflowmap"
 
+# ctest unit tests are run on build, cant be run in install tree
