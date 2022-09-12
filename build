@@ -42,8 +42,6 @@ then
      patch -p0 < ../extra/Galois3;
      patch -p0 < ../extra/Galois4
    )
-   (cd dflowmap;
-    echo "expropt" >> config.in)
    touch patched
 fi
 

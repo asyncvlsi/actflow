@@ -1,12 +1,12 @@
 # How to Package
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/bics-rug/yale-asyncvlsi-actflow/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/bics-rug/yale-asyncvlsi-actflow/tree/main)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/asyncvlsi/actflow/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/asyncvlsi/actflow/tree/main)
 
 ## optional: get/build dependencies first from actflow-dependencies
 
-download and extract the prebuild dependencies from https://github.com/bics-rug/actflow-dependencies/releases
+download and extract the prebuild dependencies from https://github.com/asyncvlsi/actflow-dependencies/releases
 and extract them into your `$ACT_HOME`
 
-or build them from https://github.com/bics-rug/actflow-dependencies
+or build them from https://github.com/asyncvlsi/actflow-dependencies
 
 ## requirements:
 if you build on an older OS your package is compatible with more target platforms, thats why the CI builds on centos7.2
@@ -38,10 +38,10 @@ to make a release permanent add a tag eg v0.1 to the current git head, and after
 
 # CI
 ## package build
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/bics-rug/yale-asyncvlsi-actflow/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/bics-rug/yale-asyncvlsi-actflow/tree/main)
-[![CircleCI](https://dl.circleci.com/insights-snapshot/gh/bics-rug/yale-asyncvlsi-actflow/main/build/badge.svg?window=60d)](https://app.circleci.com/insights/github/bics-rug/yale-asyncvlsi-actflow/workflows/build/overview?branch=main&reporting-window=last-60-days&insights-snapshot=true)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/asyncvlsi/actflow/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/asyncvlsi/actflow/tree/main)
+[![CircleCI](https://dl.circleci.com/insights-snapshot/gh/asyncvlsi/actflow/main/build/badge.svg?window=60d)](https://app.circleci.com/insights/github/asyncvlsi/actflow/workflows/build/overview?branch=main&reporting-window=last-60-days&insights-snapshot=true)
 
 ## dependencies
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/bics-rug/actflow-dependencies/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/bics-rug/actflow-dependencies/tree/main)
-[![CircleCI](https://dl.circleci.com/insights-snapshot/gh/bics-rug/actflow-dependencies/main/build/badge.svg?window=60d)](https://app.circleci.com/insights/github/bics-rug/actflow-dependencies/workflows/build/overview?branch=main&reporting-window=last-60-days&insights-snapshot=true)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/asyncvlsi/actflow-dependencies/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/asyncvlsi/actflow-dependencies/tree/main)
+[![CircleCI](https://dl.circleci.com/insights-snapshot/gh/asyncvlsi/actflow-dependencies/main/build/badge.svg?window=60d)](https://app.circleci.com/insights/github/asyncvlsi/actflow-dependencies/workflows/build/overview?branch=main&reporting-window=last-60-days&insights-snapshot=true)
 

@@ -13,6 +13,10 @@
 # limitations under the License.
 #
 
+##
+# this script calls all tests in folder tests in order, it runs linker tests and test suits if avalible
+# for more information see tests/README.md
+
 if [ x$ACT_HOME = x ]
 then
 	echo "Please set the environment variable ACT_HOME to the install directory"

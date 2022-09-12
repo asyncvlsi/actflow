@@ -11,6 +11,10 @@
 # limitations under the License.
 #
 
+#
+# this helper functions test if the binary/library is there and if all dynamic libraries are loaded correctly
+#
+
 lookup_binary () {
   if [ x$(command -v $1) = x ]; then
     echo "missing $1"

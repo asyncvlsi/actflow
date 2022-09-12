@@ -33,14 +33,13 @@ it was verified to be working out of the box on the following 64bit systems, no 
  - Debian 9/10/11
  - Ubuntu 16.04/18.04/20.04/22.04
  - OpenSUSE 15
- - ArchLinux
  - Fedora 20/latest
 
 should also work on other 64 bit systems with kernel 3.10+ (libc version) and GNU linker ld or compatible, also BSD OSes with an equiv libc/pthread/... versions (but not tested).
 
 ## install
 
-download the latest release from https://github.com/bics-rug/yale-asyncvlsi-actflow/releases and extract it with `tar -xpf actflow_package_<commit>_<date>.tar.gz`, move the act folder to you prefered install location and
+download the latest release from https://github.com/asyncvlsi/actflow/releases and extract it with `tar -xpf actflow_package_<commit>_<date>.tar.gz`, move the act folder to you prefered install location and
 just set in your shell (this is for bash, setenv works eqiv.)
 ```
 export ACT_HOME=<path to extracted act folder>

@@ -1,5 +1,20 @@
 version: 2.2
-
+# the build process is distributed over 2 pipelines actflow and actflow-dependencies
+# the actflow is shorter and builds for every commit, it takes 30-45 min, so a rowling release
+# while the actflow-dependencies take a very long time to build 3h+ and do not change often
+# as they are tracking fixed releases and updates of other opensouce software needed by the act tools
+## this rowling release pipeline:
+# the build consists out of 3 phases:
+# build: build-centos7
+# test: test-<os name and version>
+# deploy: upload-github-release
+## build notes:
+# the build downloads the prebuild dependencies from actflow-dependenies
+# as they take very long to build and do not change as often
+## test notes:
+# the OSes are setup bare, the only alowed additional packages are to help excecute the tests
+# which is make in most cases or tar and diff to exctract and compare
+## deploy is only excecuted on main
 jobs:
    build-centos7:
      docker:
@@ -74,7 +89,8 @@ jobs:
             RELEASE_VERSION="rowling"
             RELEASE_TITEL=$(head -n 1 packaging/release_titel.md)
             RELEASE_BODY=$(head -n 1 packaging/release_description.md)
-            ghr -t ${GITHUB_TOKEN} -u ${GITHUB_USER} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -n "${RELEASE_TITEL}" -b "${RELEASE_BODY}" -delete ${RELEASE_VERSION} ./upload/
+            echo "uploading to: ${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}"
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -n "${RELEASE_TITEL}" -b "${RELEASE_BODY}" -delete ${RELEASE_VERSION} ./upload/
 
    test-centos7:
      docker:
@@ -424,9 +440,12 @@ workflows:
         -  test-opensuse15:
              requires:
                - build-centos7 
-        -  test-archlinux:
-             requires:
-               - build-centos7 
+        # arch linux has the problem that for act dynamic loading LD_LIBRARY_PATH is set 
+        # and arch /bin/sh than loads libncurses from act home but cant find a symbol UP which 
+        # is in termlib not in ncurses nowadays
+        #-  test-archlinux:
+        #     requires:
+        #       - build-centos7 
         -  test-fedora-20:
              requires:
                - build-centos7 
@@ -446,7 +465,7 @@ workflows:
                - test-ubuntu18
                - test-ubuntu16
                - test-opensuse15
-               - test-archlinux
+               #- test-archlinux
                - test-fedora-20
                - test-fedora-latest
              filters:

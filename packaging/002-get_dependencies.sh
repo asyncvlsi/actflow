@@ -31,8 +31,8 @@ rm -f actflow_dependencies*.tar.gz
 # grab the latest dependencies by asking the github API for the file name
 # it would be nicer with jq but its not avalible out of the box on some systems
 # the alternative is to do fixed filenames and get them via url 
-PACKAGE_URL=$(curl -sL https://api.github.com/repos/bics-rug/actflow-dependencies/releases/latest | grep "browser_download_url.*actflow_dependencies_package*" | cut -d : -f 2,3 | tr -d \")
-SOURCE_URL=$(curl -sL https://api.github.com/repos/bics-rug/actflow-dependencies/releases/latest | grep "browser_download_url.*actflow_dependencies_sources*" | cut -d : -f 2,3 | tr -d \")
+PACKAGE_URL=$(curl -sL https://api.github.com/repos/asyncvlsi/actflow-dependencies/releases/latest | grep "browser_download_url.*actflow_dependencies_package*" | cut -d : -f 2,3 | tr -d \")
+SOURCE_URL=$(curl -sL https://api.github.com/repos/asyncvlsi/actflow-dependencies/releases/latest | grep "browser_download_url.*actflow_dependencies_sources*" | cut -d : -f 2,3 | tr -d \")
 # and download
 echo "dependency source: $SOURCE_URL"
 wget --quiet $SOURCE_URL
