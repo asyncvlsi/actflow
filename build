@@ -60,7 +60,7 @@ export VLSI_TOOLS_SRC=`pwd`/act
 cmake_build_test Galois
 if [ -f $ACT_HOME/lib64/libgalois_shmem.a -a ! -f $ACT_HOME/lib/libgalois_shmem.a ]
 then
-   ln -s $ACT_HOME/lib64/libgalois_shmem.a $ACT_HOME/lib/libgalois_shmem.a
+   (cd $ACT_HOME/lib/; ln -s ../lib64/libgalois_shmem.a libgalois_shmem.a)
 fi
 
 #
