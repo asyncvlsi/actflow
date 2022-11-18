@@ -11,15 +11,23 @@ cmake_build() {
   echo 
   echo "#### Building and installing package: $1 ####"
   echo
-  (cd $dir; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME .. && make && make install) || exit 1
+  (cd $dir; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_LIBRARY_PATH=$ACT_HOME/lib -DCMAKE_INCLUDE_PATH=$ACT_HOME/include -DCMAKE_EXE_LINKER_FLAGS=-Wl,-rpath,'$ORIGIN/../lib' -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-rpath,'$ORIGIN/../lib' -DCMAKE_BUILD_TYPE=Release -DCMAKE_POSITION_INDEPENDENT_CODE=ON .. && make && make install ) || exit 1
 }
 
-cmake_build_bipart() {
+cmake_build_test() {
+  dir=$1
+  echo 
+  echo "#### Building and installing package: $1 ####"
+  echo
+  (cd $dir; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_LIBRARY_PATH=$ACT_HOME/lib -DCMAKE_INCLUDE_PATH=$ACT_HOME/include -DCMAKE_EXE_LINKER_FLAGS=-Wl,-rpath,'$ORIGIN/../lib' -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-rpath,'$ORIGIN/../lib' -DCMAKE_BUILD_TYPE=Release -DCMAKE_POSITION_INDEPENDENT_CODE=ON .. && make && make install && CTEST_OUTPUT_ON_FAILURE=TRUE make test ) || exit 1
+}
+
+cmake_build_test_bipart() {
   dir=BiPart
   echo
   echo "#### Building and installing package: Bipart ####"
   echo
-  (cd BiPart; if [ ! -d build ]; then mkdir build; fi; cd build; LEF_ROOT=$ACT_HOME GALOIS_INCLUDE=$ACT_HOME/include GALOIS_LIB=$ACT_HOME/lib DEF_ROOT=$ACT_HOME cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME ..  && make && make install) || exit 1
+  (cd BiPart; if [ ! -d build ]; then mkdir build; fi; cd build; LEF_ROOT=$ACT_HOME GALOIS_INCLUDE=$ACT_HOME/include GALOIS_LIB=$ACT_HOME/lib DEF_ROOT=$ACT_HOME cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_LIBRARY_PATH=$ACT_HOME/lib -DCMAKE_INCLUDE_PATH=$ACT_HOME/include -DCMAKE_EXE_LINKER_FLAGS=-Wl,-rpath,'$ORIGIN/../lib' -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-rpath,'$ORIGIN/../lib' -DCMAKE_BUILD_TYPE=Release -DCMAKE_POSITION_INDEPENDENT_CODE=ON ..  && make && make install && CTEST_OUTPUT_ON_FAILURE=TRUE make test ) || exit 1
 }
 
 #
@@ -44,15 +52,15 @@ echo
 echo "####  Building and installing the core ACT library ####"
 echo
 export VLSI_TOOLS_SRC=`pwd`/act
-(cd act; ./configure $ACT_HOME; ./build; make install) || exit 1
+(cd act; ./configure $ACT_HOME CFLAGS="-I${ACT_HOME}/include -L${ACT_HOME}/lib"; ./build; make install) || exit 1
 
 #
 # Build and install the Galois library
 #
-cmake_build Galois
+cmake_build_test Galois
 if [ -f $ACT_HOME/lib64/libgalois_shmem.a -a ! -f $ACT_HOME/lib/libgalois_shmem.a ]
 then
-   ln -s $ACT_HOME/lib64/libgalois_shmem.a $ACT_HOME/lib/libgalois_shmem.a
+   (cd $ACT_HOME/lib/; ln -s ../lib64/libgalois_shmem.a libgalois_shmem.a)
 fi
 
 #
@@ -67,7 +75,7 @@ echo
 # Build and install... 
 
 # phyDB
-cmake_build phyDB
+cmake_build_test phyDB
 
 # layout
 echo
@@ -76,16 +84,16 @@ echo
 (cd layout; make depend && make && make install) || exit 1
 
 # BiPart
-cmake_build_bipart
+cmake_build_test_bipart
 
 # Dali
 cmake_build Dali
 
 # PWRoute
-cmake_build PWRoute
+cmake_build_test PWRoute
 
 # SPRoute
-cmake_build SPRoute
+cmake_build_test SPRoute
 
 # TritonRoute-WXL
 cmake_build TritonRoute-WXL
@@ -121,10 +129,11 @@ echo
 echo
 echo "#### Building dflowmap ####"
 echo
-(cd dflowmap; ./build.sh; cd build; make install) || exit 1
+(cd dflowmap; ./configure; cd ..; cmake_build dflowmap) || exit 1
 
 # actsim
 echo 
 echo "#### Building actsim ####"
 echo 
+if [ -f ${ACT_HOME}/include/xyce.in ]; then cp ${ACT_HOME}/include/xyce.in actsim/; fi
 (cd actsim; ./configure; make depend && make && make install) || exit 1
