@@ -122,6 +122,13 @@ echo
 echo "#### Building dflowmap ####"
 echo
 (cd dflowmap; ./build.sh; cd build; make install) || exit 1
+#
+# prs2fpga
+echo
+echo "#### Building prs2fpga ####"
+echo
+(cd prs2fpga; make depend && make && make install) || exit 1
+
 
 # actsim
 echo 
