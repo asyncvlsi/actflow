@@ -134,4 +134,4 @@ echo
 echo 
 echo "#### Building actsim ####"
 echo 
-(cd actsim; ./configure; make depend && make && make install) || exit 1
+(cd actsim; ./configure; ./build.sh; make install) || exit 1
