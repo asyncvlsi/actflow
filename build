@@ -6,12 +6,16 @@ then
         exit 1
 fi
 
+./check_omp.sh || exit 1
+
+cxx_compiler=`cat CXX_COMPILER`
+
 cmake_build() {
   dir=$1
   echo 
   echo "#### Building and installing package: $1 ####"
   echo
-  (cd $dir; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME .. && make && make install) || exit 1
+  (cd $dir; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler .. && make && make install) || exit 1
 }
 
 cmake_build_bipart() {
@@ -19,7 +23,7 @@ cmake_build_bipart() {
   echo
   echo "#### Building and installing package: Bipart ####"
   echo
-  (cd BiPart; if [ ! -d build ]; then mkdir build; fi; cd build; LEF_ROOT=$ACT_HOME GALOIS_INCLUDE=$ACT_HOME/include GALOIS_LIB=$ACT_HOME/lib DEF_ROOT=$ACT_HOME cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME ..  && make && make install) || exit 1
+  (cd BiPart; if [ ! -d build ]; then mkdir build; fi; cd build; LEF_ROOT=$ACT_HOME GALOIS_INCLUDE=$ACT_HOME/include GALOIS_LIB=$ACT_HOME/lib DEF_ROOT=$ACT_HOME cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler ..  && make && make install) || exit 1
 }
 
 #
@@ -44,7 +48,7 @@ echo
 echo "####  Building and installing the core ACT library ####"
 echo
 export VLSI_TOOLS_SRC=`pwd`/act
-(cd act; ./configure $ACT_HOME; ./build; make install) || exit 1
+(cd act; ./configure $ACT_HOME; ./build $cxx_compiler; make install) || exit 1
 
 #
 # Build and install the Galois library
@@ -73,7 +77,7 @@ cmake_build phyDB
 echo
 echo "#### Building layout ####"
 echo
-(cd layout; make depend && make && make install) || exit 1
+(cd layout; make depend && make CXX=$cxx_compiler && make install) || exit 1
 
 # BiPart
 cmake_build_bipart
@@ -94,7 +98,7 @@ cmake_build TritonRoute-WXL
 echo
 echo "#### Building interact ####"
 echo
-(cd interact; ./configure; make depend && make && make install) || exit 1
+(cd interact; ./configure; make depend && make CXX=$cxx_compiler && make install) || exit 1
 
 # stdlib
 echo 
@@ -107,7 +111,7 @@ echo
 echo
 echo "#### Building expropt ####"
 echo
-(cd expropt; ./configure; make depend && make && make install) || exit 1
+(cd expropt; ./configure; make depend && make CXX=$cxx_compiler && make install) || exit 1
 
 #
 # chp2prs
