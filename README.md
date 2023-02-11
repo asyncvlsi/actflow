@@ -1,5 +1,7 @@
 # The ACT flow for implementing asynchronous logic
 
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/asyncvlsi/actflow/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/asyncvlsi/actflow/tree/main)
+
 This repository contains the key modules required to use the ACT implementation flow for asynchronous logic.
 The parallel algorithms used in the implemention flow use a combination of OpenMP and the [Galois](https://github.com/IntelligentSoftwareSystems/Galois)
 library. 
