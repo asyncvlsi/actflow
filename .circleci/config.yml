@@ -1,0 +1,24 @@
+version: 2
+
+jobs:
+   ubuntu:
+      docker:
+         - image: ubuntu
+      steps:
+         - checkout
+         - run: |
+              echo "Hello"
+              apt-get -q update -y
+              apt-get -q install -y libedit-dev zlib1g-dev m4 build-essential cmake libfmt-dev git cmake libboost-all-dev libopenmpi-dev llvm flex bison
+              git clone https://github.com/asyncvlsi/actflow
+              cd actflow
+              git submodule update --init --recursive
+              mkdir /usr/local/cad
+              export ACT_HOME=/usr/local/cad
+              ./build
+
+workflows:
+   version: 2
+   build:
+      jobs:
+         - ubuntu
