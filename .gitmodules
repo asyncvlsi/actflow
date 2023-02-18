@@ -74,3 +74,6 @@
 [submodule "sky130l"]
 	path = sky130l
 	url = https://github.com/asyncvlsi/sky130l
+[submodule "utils"]
+	path = utils
+	url = https://github.com/asyncvlsi/utils

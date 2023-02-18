@@ -132,6 +132,11 @@ act_tool_build dflow2dot
 # sky130l
 act_tool_build sky130l
 
+#
+# utils
+act_tool_build utils
+
+
 # actsim
 echo 
 echo "#### Building actsim ####"
