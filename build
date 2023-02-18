@@ -128,6 +128,10 @@ act_tool_build xcell
 # dflow2dot
 act_tool_build dflow2dot
 
+#
+# sky130l
+act_tool_build sky130l
+
 # actsim
 echo 
 echo "#### Building actsim ####"
