@@ -15,23 +15,8 @@ do
 	(cd $i; rm -rf build)
 done
 
-echo "*** interact ***"
-(cd interact; make realclean)
-
-echo "*** layout ***"
-(cd layout; make realclean)
-
-echo "*** expropt ***"
-(cd expropt; make realclean)
-
-echo "*** chp2prs ***"
-(cd chp2prs; make realclean)
-
-echo "*** dflowmap ***"
-(cd dflowmap; rm -rf build)
-
-echo "*** prs2fpga ***"
-(cd prs2fpga; make realclean)
-
-echo "*** actsim ***"
-(cd actsim; make realclean)
+for i in interact layout expropt chp2prs prs2fpga xcell dflow2dot actsim
+do
+   echo "*** $i ***"
+   (cd $i; make realclean)
+done

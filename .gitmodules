@@ -65,3 +65,9 @@
 [submodule "prs2fpga"]
 	path = prs2fpga
 	url = https://github.com/asyncvlsi/prs2fpga
+[submodule "xcell"]
+	path = xcell
+	url = https://github.com/asyncvlsi/xcell
+[submodule "dflow2dot"]
+	path = dflow2dot
+	url = https://github.com/asyncvlsi/dflow2dot

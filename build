@@ -15,7 +15,7 @@ cmake_build() {
   echo 
   echo "#### Building and installing package: $1 ####"
   echo
-  (cd $dir; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler .. && make && make install) || exit 1
+  (cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler .. && make && make install) || exit 1
 }
 
 cmake_build_bipart() {
@@ -24,6 +24,14 @@ cmake_build_bipart() {
   echo "#### Building and installing package: Bipart ####"
   echo
   (cd BiPart; if [ ! -d build ]; then mkdir build; fi; cd build; LEF_ROOT=$ACT_HOME GALOIS_INCLUDE=$ACT_HOME/include GALOIS_LIB=$ACT_HOME/lib DEF_ROOT=$ACT_HOME cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler ..  && make && make install) || exit 1
+}
+
+act_tool_build() {
+  dir=$1
+  echo 
+  echo "#### Building and installing package: $1 ####"
+  echo
+  (cd $dir; if [ -x ./configure ]; then ./configure; fi; make CXX=$cxx_compiler depend && make CXX=$cxx_compiler && make install) || exit 1
 }
 
 #
@@ -74,10 +82,7 @@ echo
 cmake_build phyDB
 
 # layout
-echo
-echo "#### Building layout ####"
-echo
-(cd layout; make depend && make CXX=$cxx_compiler && make install) || exit 1
+act_tool_build layout
 
 # BiPart
 cmake_build_bipart
@@ -95,44 +100,33 @@ cmake_build SPRoute
 cmake_build TritonRoute-WXL
 
 # interact
-echo
-echo "#### Building interact ####"
-echo
-(cd interact; ./configure; make depend && make CXX=$cxx_compiler && make install) || exit 1
+act_tool_build interact
 
 # stdlib
-echo 
-echo "#### Installing ACT std lib ####"
-echo
-(cd stdlib; make install) || exit 1
-
+act_tool_build stdlib
 
 # expropt
-echo
-echo "#### Building expropt ####"
-echo
-(cd expropt; ./configure; make depend && make CXX=$cxx_compiler && make install) || exit 1
+act_tool_build expropt
 
 #
 # chp2prs
-echo
-echo "#### Building chp2prs ####"
-echo
-(cd chp2prs; ./configure; make depend && make && make install) || exit 1
+act_tool_build chp2prs
 
 #
 # dflowmap
-echo
-echo "#### Building dflowmap ####"
-echo
-(cd dflowmap; ./build.sh; cd build; make install) || exit 1
+cmake_build dflowmap
+
 #
 # prs2fpga
-echo
-echo "#### Building prs2fpga ####"
-echo
-(cd prs2fpga; make depend && make && make install) || exit 1
+act_tool_build prs2fpga
 
+#
+# xcell
+act_tool_build xcell
+
+#
+# dflow2dot
+act_tool_build dflow2dot
 
 # actsim
 echo 
