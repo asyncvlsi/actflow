@@ -17,8 +17,24 @@ jobs:
               export ACT_HOME=/usr/local/cad
               ./build
 
+   alpine:
+      docker:
+         - image: alpine:latest
+      steps:
+         - checkout
+         - run: |
+              apk update
+              apk add libedit-dev zlib-dev m4 make cmake fmt-dev git boost-dev openmpi-dev llvm flex bison gcc g++ patch numactl-dev
+              git clone https://github.com/asyncvlsi/actflow
+              cd actflow
+              git submodule update --init --recursive
+              mkdir /usr/local/cad
+              export ACT_HOME=/usr/local/cad
+              ./build
+
 workflows:
    version: 2
    build:
       jobs:
          - ubuntu
+         - alpine
