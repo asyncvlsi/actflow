@@ -4,7 +4,8 @@
 
 This repository contains the key modules required to use the ACT implementation flow for asynchronous logic.
 The parallel algorithms used in the implemention flow use a combination of OpenMP and the [Galois](https://github.com/IntelligentSoftwareSystems/Galois)
-library. 
+library.
+
 
 ## Dependencies
 
@@ -32,9 +33,11 @@ The README provided by yosys has detailed installation instructions.
 
 ## Steps
 
-1. Pick an installation directory for all the tools, and set the environment variable `ACT_HOME` to this directory. Create this directory.
+1. Pick an installation directory for all the tools, and set the environment variable `ACT_HOME` to this directory. Create this directory. 
 
-2. Run `./build`
+2. Make sure you have all the submodules needed as well (`git submodule update --init --recursive`), if you didn't clone the repo with all the submodules.
+
+3. Run `./build`
 
 This should build and install all the libraries and tools needed.
 
