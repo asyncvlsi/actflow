@@ -68,12 +68,24 @@ then
 fi
 
 #
+# Build and install the timing library, if it exists
+#
+if [ -f timing/actpin.h ]
+then
+    echo
+    echo "#### Building and installing timing library ####"
+    echo
+    (cd timing; ./build.sh) || exit 1
+fi
+
+#
 # Build and install the LEF/DEF library
 #
 echo
 echo "####  Building and installing the LEF/DEF parser ####"
 echo
 (cd lefdef; make && make install) || exit 1
+
 
 #
 # Build and install... 
