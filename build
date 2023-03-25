@@ -6,16 +6,34 @@ then
         exit 1
 fi
 
+if [ -f CXX_COMPILER ]
+then
+	rm CXX_COMPILER
+fi
+if [ -f CXX_LIBFS ]
+then
+	rm CXX_LIBFS
+fi
 ./check_omp.sh || exit 1
+./check_filesystem.sh || exit 1
 
 cxx_compiler=`cat CXX_COMPILER`
+
+needlib=""
+needmake=""
+
+if [ -f CXX_LIBFS ]
+then
+   needlib="-DNEED_LIBCXXFS=1"
+   needmake="NEED_LIBCXXFS=1"
+fi
 
 cmake_build() {
   dir=$1
   echo 
   echo "#### Building and installing package: $1 ####"
   echo
-  (cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler .. && make && make install) || exit 1
+  (cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib .. && make && make install) || exit 1
 }
 
 cmake_build_bipart() {
@@ -23,7 +41,7 @@ cmake_build_bipart() {
   echo
   echo "#### Building and installing package: Bipart ####"
   echo
-  (cd BiPart; if [ ! -d build ]; then mkdir build; fi; cd build; LEF_ROOT=$ACT_HOME GALOIS_INCLUDE=$ACT_HOME/include GALOIS_LIB=$ACT_HOME/lib DEF_ROOT=$ACT_HOME cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler ..  && make && make install) || exit 1
+  (cd BiPart; if [ ! -d build ]; then mkdir build; fi; cd build; LEF_ROOT=$ACT_HOME GALOIS_INCLUDE=$ACT_HOME/include GALOIS_LIB=$ACT_HOME/lib DEF_ROOT=$ACT_HOME cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib ..  && make && make install) || exit 1
 }
 
 act_tool_build() {
@@ -31,7 +49,7 @@ act_tool_build() {
   echo 
   echo "#### Building and installing package: $1 ####"
   echo
-  (cd $dir; if [ -x ./configure ]; then ./configure; fi; make CXX=$cxx_compiler depend && make CXX=$cxx_compiler && make install) || exit 1
+  (cd $dir; if [ -x ./configure ]; then ./configure; fi; make CXX=$cxx_compiler $needmake depend && make CXX=$cxx_compiler $needmake && make install) || exit 1
 }
 
 #
