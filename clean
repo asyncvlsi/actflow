@@ -20,3 +20,10 @@ do
    echo "*** $i ***"
    (cd $i; make realclean)
 done
+
+if [ -f timing/actpin.h ]
+then
+   echo "*** timing ***"
+   (cd timing/cyclone; rm -rf build)
+   (cd timing/galois_eda; rm -rf build)
+fi
