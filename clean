@@ -27,3 +27,15 @@ then
    (cd timing/cyclone; rm -rf build)
    (cd timing/galois_eda; rm -rf build)
 fi
+
+if [ -f dflowmap_netlist/build.sh ]
+then
+   echo "*** dflowmap_netlist ***"
+   (cd dflowmap_netlist; rm -rf build)
+fi
+
+if [ -f expropt_commercial/Makefile ]
+then
+   echo "*** expropt_commercial ***"
+   (cd expropt_commercial; make realclean)
+fi

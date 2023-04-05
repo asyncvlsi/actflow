@@ -135,6 +135,12 @@ act_tool_build interact
 # stdlib
 act_tool_build stdlib
 
+# expropt_commercial
+if [ -f expropt_commercial/Makefile ]
+then
+   act_tool_build expropt_commercial
+fi
+
 # expropt
 act_tool_build expropt
 
@@ -145,6 +151,16 @@ act_tool_build chp2prs
 #
 # dflowmap
 cmake_build dflowmap
+
+#
+# dflowmap_netlist, if it exists
+#
+if [ -f dflowmap_netlist/build.sh ]
+then
+    cmake_build dflowmap_netlist
+    cmake_build dflowmap
+fi
+
 
 #
 # prs2fpga
