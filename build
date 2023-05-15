@@ -74,7 +74,7 @@ echo
 echo "####  Building and installing the core ACT library ####"
 echo
 export VLSI_TOOLS_SRC=`pwd`/act
-(cd act; ./configure $ACT_HOME; ./build $cxx_compiler; make install) || exit 1
+(cd act; ./configure $ACT_HOME CXX=$cxx_compiler; ./build; make install) || exit 1
 
 #
 # Build and install the Galois library
