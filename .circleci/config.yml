@@ -15,7 +15,7 @@ jobs:
               git submodule update --init --recursive
               mkdir /usr/local/cad
               export ACT_HOME=/usr/local/cad
-              ./build
+              ./build && ./run.sh
 
    alpine:
       docker:
@@ -30,7 +30,7 @@ jobs:
               git submodule update --init --recursive
               mkdir /usr/local/cad
               export ACT_HOME=/usr/local/cad
-              ./build
+              ./build && ./run.sh
 
 workflows:
    version: 2
