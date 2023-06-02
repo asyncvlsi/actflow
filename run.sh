@@ -13,6 +13,7 @@ test_act() {
   fi
 }
 
+export VLSI_TOOLS_SRC=`pwd`/act
 test_act act "core ACT lib"
 test_act actsim "actsim"
 test_act chp2prs "chp2prs"
