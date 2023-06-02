@@ -17,8 +17,8 @@ export VLSI_TOOLS_SRC=`pwd`/act
 test_act act "core ACT lib"
 test_act actsim "actsim"
 
-#export PATH=${PATH}:${ACT_HOME}/bin
-#test_act chp2prs "chp2prs"
+export PATH=${PATH}:${ACT_HOME}/bin
+test_act chp2prs "chp2prs"
 
 test_act layout "layout library"
 test_act timing "cyclone"
