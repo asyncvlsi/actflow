@@ -30,10 +30,11 @@ fi
 
 cmake_build() {
   dir=$1
+  shift
   echo 
   echo "#### Building and installing package: $1 ####"
   echo
-  (cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib .. && make && make install) || exit 1
+  (cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib $@ .. && make && make install) || exit 1
 }
 
 cmake_build_bipart() {
@@ -98,7 +99,12 @@ echo
 # Build and install... 
 
 # phyDB
-cmake_build phyDB
+if [ -f timing/actpin.h ]
+then
+	cmake_build phyDB -DPHYDB_USE_GALOIS=1
+else
+	cmake_build phyDB
+fi
 
 #
 # Build and install the timing library, if it exists
@@ -109,8 +115,6 @@ then
     echo "#### Building and installing timing library ####"
     echo
     (cd timing; ./build.sh) || exit 1
-    echo "#### Rebuilding phydb ####"
-    cmake_build phyDB
 fi
 
 # layout
