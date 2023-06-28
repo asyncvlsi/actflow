@@ -32,7 +32,7 @@ cmake_build() {
   dir=$1
   shift
   echo 
-  echo "#### Building and installing package: $1 ####"
+  echo "#### Building and installing package: $dir ####"
   echo
   (cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib $@ .. && make && make install) || exit 1
 }
@@ -97,6 +97,10 @@ echo
 
 #
 # Build and install... 
+
+# abc
+
+cmake_build abc
 
 # phyDB
 if [ -f timing/actpin.h ]

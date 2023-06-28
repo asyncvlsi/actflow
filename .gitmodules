@@ -77,3 +77,6 @@
 [submodule "utils"]
 	path = utils
 	url = https://github.com/asyncvlsi/utils
+[submodule "abc"]
+	path = abc
+	url = https://github.com/asyncvlsi/abc
