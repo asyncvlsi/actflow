@@ -101,6 +101,12 @@ echo
 # abc
 
 cmake_build abc
+if [ `wc -l abc/readline.mk | awk '{print $1}'` -gt 0 ]
+then
+	cp abc/readline.mk $ACT_HOME/scripts/found_readline
+else
+	rm $ACT_HOME/scripts/found_readline 2>/dev/null
+fi
 
 # phyDB
 if [ -f timing/actpin.h ]
