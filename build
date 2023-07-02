@@ -53,6 +53,11 @@ act_tool_build() {
   (cd $dir; if [ -x ./configure ]; then ./configure; fi; make CXX=$cxx_compiler $needmake depend && make CXX=$cxx_compiler $needmake && make install) || exit 1
 }
 
+build_abc() {
+  echo "#### Building abc in two phases: libabc.a and then libabc.so ###"
+  (cd abc; make ABC_USE_NO_READLINE=1 libabc.a; cp libabc.a $ACT_HOME/lib)
+  (cd abc2; make ABC_USE_NO_READLINE=1 ABC_USE_PIC=1 libabc.so; cp libabc.so $ACT_HOME/lib)
+}
 #
 # Apply patches
 #
@@ -99,14 +104,7 @@ echo
 # Build and install... 
 
 # abc
-
-cmake_build abc
-if [ `wc -l abc/readline.mk | awk '{print $1}'` -gt 0 ]
-then
-	cp abc/readline.mk $ACT_HOME/scripts/found_readline
-else
-	rm $ACT_HOME/scripts/found_readline 2>/dev/null
-fi
+build_abc
 
 # phyDB
 if [ -f timing/actpin.h ]
