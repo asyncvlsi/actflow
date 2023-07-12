@@ -9,11 +9,15 @@ echo "*** act ***"
 echo "*** lefdef ***"
 (cd lefdef; make clean)
 
-for i in Galois obc phyDB BiPart Dali PWRoute SPRoute TritonRoute-WXL dflowmap
+for i in Galois phyDB BiPart Dali PWRoute SPRoute TritonRoute-WXL dflowmap
 do
 	echo "*** $i ***"
-	(cd $i; rm -rf build)
+	(cd $i && rm -rf build)
 done
+
+echo "*** abc ***"
+(cd abc && make clean)
+(cd abc2 && make clean)
 
 for i in interact layout expropt chp2prs prs2fpga xcell dflow2dot actsim
 do
@@ -24,14 +28,14 @@ done
 if [ -f timing/actpin.h ]
 then
    echo "*** timing ***"
-   (cd timing/cyclone; rm -rf build)
-   (cd timing/galois_eda; rm -rf build)
+   (cd timing/cyclone && rm -rf build)
+   (cd timing/galois_eda && rm -rf build)
 fi
 
 if [ -f dflowmap_netlist/build.sh ]
 then
    echo "*** dflowmap_netlist ***"
-   (cd dflowmap_netlist; rm -rf build)
+   (cd dflowmap_netlist && rm -rf build)
 fi
 
 if [ -f expropt_commercial/Makefile ]
