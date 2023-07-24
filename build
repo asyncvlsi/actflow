@@ -106,13 +106,14 @@ echo
 # abc
 build_abc
 
-# phyDB
+# galois timer library
 if [ -f timing/actpin.h ]
 then
-	cmake_build phyDB -DPHYDB_USE_GALOIS=1
-else
-	cmake_build phyDB
+	(cd timing; ./build_galois.sh) || exit 1
 fi
+
+# phyDB
+cmake_build phyDB
 
 #
 # Build and install the timing library, if it exists
