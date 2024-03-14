@@ -53,11 +53,6 @@ act_tool_build() {
   (cd $dir; if [ -x ./configure ]; then ./configure; fi; make CXX=$cxx_compiler $needmake depend && make CXX=$cxx_compiler $needmake && make install) || exit 1
 }
 
-build_abc() {
-  echo "#### Building abc in two phases: libabc.a and then libabc.so ###"
-  (cd abc; make ABC_USE_NO_READLINE=1 libabc.a; cp libabc.a $ACT_HOME/lib)
-  (cd abc2; make ABC_USE_NO_READLINE=1 ABC_USE_PIC=1 libabc.so; cp libabc.so $ACT_HOME/lib)
-}
 #
 # Apply patches
 #
@@ -102,9 +97,7 @@ echo
 
 #
 # Build and install... 
-
-# abc
-build_abc
+#
 
 # galois timer library
 if [ -f timing/actpin.h ]
@@ -157,7 +150,7 @@ then
 fi
 
 # expropt
-act_tool_build expropt
+(cd expropt; ./configure; ./build.sh CXX=$cxx_compiler $needmake; make install) || exit 1
 
 #
 # chp2prs

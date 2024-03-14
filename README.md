@@ -31,6 +31,11 @@ It can also use [yosys](https://github.com/YosysHQ/yosys), if the binary
 is installed on your system.
 The README provided by yosys has detailed installation instructions.
 
+Your system may have an older version of the Boost libraries installed.
+If you cannot update those and need to install a more modern version of
+Boost in a different directory, then you can point the build process to
+your new Boost library location by setting the `BOOST_ROOT` environment
+variable to the new install directory.
 
 ## Steps
 
