@@ -16,8 +16,8 @@ do
 done
 
 echo "*** abc ***"
-(cd abc && make clean)
-(cd abc2 && make clean)
+(cd expropt/abc && make clean)
+(cd expropt/abc2 && make clean)
 
 for i in interact layout expropt chp2prs prs2fpga xcell dflow2dot actsim
 do
