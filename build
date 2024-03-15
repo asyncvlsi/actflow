@@ -143,14 +143,14 @@ act_tool_build interact
 # stdlib
 act_tool_build stdlib
 
+# expropt
+(cd expropt; ./build.sh CXX=$cxx_compiler $needmake; make install) || exit 1
+
 # expropt_commercial
 if [ -f expropt_commercial/Makefile ]
 then
    act_tool_build expropt_commercial
 fi
-
-# expropt
-(cd expropt; ./configure; ./build.sh CXX=$cxx_compiler $needmake; make install) || exit 1
 
 #
 # chp2prs
