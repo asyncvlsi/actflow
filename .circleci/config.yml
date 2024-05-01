@@ -9,7 +9,7 @@ jobs:
          - run: |
               echo "Hello"
               apt-get -q update -y
-              apt-get -q install -y libedit-dev zlib1g-dev m4 build-essential cmake libfmt-dev git cmake libboost-all-dev libopenmpi-dev llvm flex bison
+              DEBIAN_FRONTEND=noninteractive apt-get -q install -y libedit-dev zlib1g-dev m4 build-essential cmake libfmt-dev git cmake libboost-all-dev libopenmpi-dev llvm flex bison
               git clone https://github.com/asyncvlsi/actflow
               cd actflow
               git submodule update --init --recursive
