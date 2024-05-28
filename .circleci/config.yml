@@ -3,7 +3,7 @@ version: 2
 jobs:
    ubuntu:
       docker:
-         - image: default
+         - image: ubuntu
       steps:
          - checkout
          - run: |
