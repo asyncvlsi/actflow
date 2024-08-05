@@ -95,6 +95,7 @@ echo
 (cd lefdef; make && make install) || exit 1
 
 # Build and install the SDF/SPEF library
+(cd annotate; make install_inc)
 act_tool_build annotate
 
 #
