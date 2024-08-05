@@ -94,6 +94,8 @@ echo "####  Building and installing the LEF/DEF parser ####"
 echo
 (cd lefdef; make && make install) || exit 1
 
+# Build and install the SDF/SPEF library
+act_tool_build annotate
 
 #
 # Build and install... 

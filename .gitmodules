@@ -77,3 +77,6 @@
 [submodule "utils"]
 	path = utils
 	url = https://github.com/asyncvlsi/utils
+[submodule "annotate"]
+	path = annotate
+	url = https://github.com/asyncvlsi/annotate

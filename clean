@@ -19,7 +19,7 @@ echo "*** abc ***"
 (cd expropt/abc && make clean)
 (cd expropt/abc2 && make clean)
 
-for i in interact layout expropt chp2prs prs2fpga xcell dflow2dot actsim
+for i in annotate interact layout expropt chp2prs prs2fpga xcell dflow2dot actsim
 do
    echo "*** $i ***"
    (cd $i; make realclean)
