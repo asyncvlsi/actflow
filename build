@@ -50,7 +50,7 @@ act_tool_build() {
   echo 
   echo "#### Building and installing package: $1 ####"
   echo
-  (cd $dir; if [ -x ./configure ]; then ./configure; fi; make CXX=$cxx_compiler $needmake depend && make CXX=$cxx_compiler $needmake && make install) || exit 1
+  (cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ -x ./build.sh ]; then ./build.sh CXX=$cxx_compiler $needmake; else make CXX=$cxx_compiler $needmake depend && make CXX=$cxx_compiler $needmake && make install; fi) || exit 1
 }
 
 #
@@ -95,7 +95,6 @@ echo
 (cd lefdef; make && make install) || exit 1
 
 # Build and install the SDF/SPEF library
-(cd annotate; make install_inc)
 act_tool_build annotate
 
 #
@@ -147,7 +146,7 @@ act_tool_build interact
 act_tool_build stdlib
 
 # expropt
-(cd expropt; ./build.sh CXX=$cxx_compiler $needmake; make install) || exit 1
+act_build_tool expropt 
 
 # expropt_commercial
 if [ -f expropt_commercial/Makefile ]
@@ -198,4 +197,4 @@ act_tool_build utils
 echo 
 echo "#### Building actsim ####"
 echo 
-(cd actsim; ./configure; ./build.sh; make install) || exit 1
+act_tool_build actsim
