@@ -34,7 +34,7 @@ cmake_build() {
   echo 
   echo "#### Building and installing package: $dir ####"
   echo
-  (cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib $@ .. && make && make install) >logs/${dir}.log 2>logs/${dir}.err || exit 1
+  (cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib $@ .. && make && make install) 2>logs/${dir}.err || exit 1
 }
 
 cmake_build_bipart() {
@@ -50,7 +50,7 @@ act_tool_build() {
   echo 
   echo "#### Building and installing package: $1 ####"
   echo
-  (cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ -x ./build.sh ]; then ./build.sh CXX=$cxx_compiler $needmake; else make CXX=$cxx_compiler $needmake depend && make CXX=$cxx_compiler $needmake && make install; fi) >logs/${dir}.log 2>logs/${dir}.err || exit 1
+  (cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ -x ./build.sh ]; then ./build.sh CXX=$cxx_compiler $needmake; else make CXX=$cxx_compiler $needmake depend && make CXX=$cxx_compiler $needmake && make install; fi) 2>logs/${dir}.err || exit 1
 }
 
 #
@@ -83,12 +83,12 @@ echo
 echo "####  Building and installing the core ACT library ####"
 echo
 export VLSI_TOOLS_SRC=`pwd`/act
-(cd act; ./configure $ACT_HOME CXX=$cxx_compiler; ./build; make install) >logs/act.log 2>logs/act.err || exit 1
+(cd act; ./configure $ACT_HOME CXX=$cxx_compiler; ./build; make install) 2>logs/act.err || exit 1
 
 #
 # Build and install the Galois library
 #
-cmake_build Galois >logs/Galois.log 2>logs/Galois.err
+cmake_build Galois 2>logs/Galois.err
 if [ -f $ACT_HOME/lib64/libgalois_shmem.a -a ! -f $ACT_HOME/lib/libgalois_shmem.a ]
 then
    ln -s $ACT_HOME/lib64/libgalois_shmem.a $ACT_HOME/lib/libgalois_shmem.a
@@ -100,7 +100,7 @@ fi
 echo
 echo "####  Building and installing the LEF/DEF parser ####"
 echo
-(cd lefdef; make && make install) >logs/lefdef.log 2>logs/lefdef.err || exit 1
+(cd lefdef; make && make install) 2>logs/lefdef.err || exit 1
 
 # Build and install the SDF/SPEF library
 act_tool_build annotate
@@ -112,7 +112,7 @@ act_tool_build annotate
 # galois timer library
 if [ -f timing/actpin.h ]
 then
-	(cd timing; ./build_galois.sh) >logs/timing.log 2>logs/timing.err || exit 1
+	(cd timing; ./build_galois.sh) 2>logs/timing.err || exit 1
 fi
 
 # phyDB
@@ -126,14 +126,14 @@ then
     echo
     echo "#### Building and installing timing library ####"
     echo
-    (cd timing; ./build.sh) >logs/timing2.log 2>logs/timing2.err || exit 1
+    (cd timing; ./build.sh) 2>logs/timing2.err || exit 1
 fi
 
 # layout
 act_tool_build layout
 
 # BiPart
-cmake_build_bipart >logs/bipart.log 2>logs/bipart.err
+cmake_build_bipart 2>logs/bipart.err
 
 # Dali
 cmake_build Dali
