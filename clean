@@ -16,8 +16,8 @@ do
 done
 
 echo "*** abc ***"
-(cd expropt/abc && make clean)
-(cd expropt/abc2 && make clean)
+(cd expropt/abc && make clean ABC_MAKE_NO_DEPS=1)
+(cd expropt/abc2 && make clean ABC_MAKE_NO_DEPS=1)
 
 for i in annotate interact layout expropt chp2prs prs2fpga xcell dflow2dot actsim
 do
