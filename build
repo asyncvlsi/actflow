@@ -6,6 +6,19 @@ then
         exit 1
 fi
 
+if [ ! -d $ACT_HOME ]
+then
+	echo "ACT_HOME directory [$ACT_HOME] not found?"
+	exit 1
+fi
+
+if [ ! -w $ACT_HOME ]
+then
+	echo
+	echo "WARNING: ACT_HOME directory [$ACT_HOME] is not writeable; I hope that is okay!"
+	echo
+fi
+
 if [ -f CXX_COMPILER ]
 then
 	rm CXX_COMPILER
