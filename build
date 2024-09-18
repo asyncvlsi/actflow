@@ -47,7 +47,7 @@ cmake_build() {
   echo 
   echo "#### Building and installing package: $dir ####"
   echo
-  (cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib $@ .. && make && make install) 2>logs/${dir}.err || exit 1
+  (cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib $@ .. && make && make install) 2>logs/${dir}.err | ./gen_output.sh logs/${dir}.log 10 || exit 1
 }
 
 cmake_build_bipart() {
@@ -59,11 +59,17 @@ cmake_build_bipart() {
 }
 
 act_tool_build() {
+  if [ $# -eq 1 ]
+  then
+     thresh=10
+  else
+     thresh=$2
+  fi
   dir=$1
   echo 
   echo "#### Building and installing package: $1 ####"
   echo
-  (cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ -x ./build.sh ]; then ./build.sh CXX=$cxx_compiler $needmake; else make CXX=$cxx_compiler $needmake depend && make CXX=$cxx_compiler $needmake && make install; fi) 2>logs/${dir}.err || exit 1
+  (cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ -x ./build.sh ]; then ./build.sh CXX=$cxx_compiler $needmake; else make CXX=$cxx_compiler $needmake depend && make CXX=$cxx_compiler $needmake && make install; fi) 2>logs/${dir}.err | ./gen_output.sh logs/${dir}.log $thresh || exit 1
 }
 
 #
@@ -89,6 +95,11 @@ then
 	mkdir logs
 fi
 
+echo "Log files and errors can be found in the logs/ directory."
+echo "Each number displayed corresponds to 10 lines in the output log file."
+echo 
+echo "Starting: `date`"
+
 #
 # Build and install the ACT library
 #
@@ -96,7 +107,7 @@ echo
 echo "####  Building and installing the core ACT library ####"
 echo
 export VLSI_TOOLS_SRC=`pwd`/act
-(cd act; ./configure $ACT_HOME CXX=$cxx_compiler; ./build; make install) 2>logs/act.err || exit 1
+(cd act; ./configure $ACT_HOME CXX=$cxx_compiler; ./build; make install) 2>logs/act.err | ./gen_output.sh logs/act.log || exit 1
 
 #
 # Build and install the Galois library
@@ -113,7 +124,7 @@ fi
 echo
 echo "####  Building and installing the LEF/DEF parser ####"
 echo
-(cd lefdef; make && make install) 2>logs/lefdef.err || exit 1
+(cd lefdef; make && make install) 2>logs/lefdef.err | ./gen_output.sh logs/lefdef.log || exit 1
 
 # Build and install the SDF/SPEF library
 act_tool_build annotate
@@ -125,7 +136,7 @@ act_tool_build annotate
 # galois timer library
 if [ -f timing/actpin.h ]
 then
-	(cd timing; ./build_galois.sh) 2>logs/timing.err || exit 1
+	(cd timing; ./build_galois.sh) 2>logs/timing.err | ./gen_output.sh logs/timing.log || exit 1
 fi
 
 # phyDB
@@ -139,14 +150,14 @@ then
     echo
     echo "#### Building and installing timing library ####"
     echo
-    (cd timing; ./build.sh) 2>logs/timing2.err || exit 1
+    (cd timing; ./build.sh) 2>logs/timing2.err | ./gen_output.sh logs/timing2.log || exit 1
 fi
 
 # layout
 act_tool_build layout
 
 # BiPart
-cmake_build_bipart 2>logs/bipart.err
+cmake_build_bipart 2>logs/bipart.err | ./gen_output.sh logs/bipart.log
 
 # Dali
 cmake_build Dali
@@ -167,7 +178,7 @@ act_tool_build interact
 act_tool_build stdlib
 
 # expropt
-act_tool_build expropt 
+act_tool_build expropt 50
 
 # expropt_commercial
 if [ -f expropt_commercial/Makefile ]
@@ -215,3 +226,6 @@ act_tool_build utils
 
 # actsim
 act_tool_build actsim
+
+echo
+echo "Finished: `date`"
