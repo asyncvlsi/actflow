@@ -41,19 +41,38 @@ then
    needmake="NEED_LIBCXXFS=1"
 fi
 
+#
+# Shell re-direct idiom used
+#
+# ((((command; echo $? >&3) | pipeline >&4) 3>&1) | (read res; exit $res)) 4>&1 
+#
+#  1. Run command and capture its exit status on file descriptor (fd) 3
+#  2. Redirect stdout to fd 4
+#  3. Redirect fd 3 (the exit code) to stdout
+#  4. Read the exit code from stdin (pipeline), and re-exit
+#  5. Redirect fd 4 to stdout to restore it
+#
+
 cmake_build() {
   dir=$1
   shift
   echo 
   echo "#### Building and installing package: $dir ####"
+  date
   echo
-  (cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib $@ .. && make && make install) 2>logs/${dir}.err | ./gen_output.sh logs/${dir}.log 10 || exit 1
+  ((((cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib $@ .. && make && make install; echo $? >&3) 2>logs/${dir}.err | ./gen_output.sh logs/${dir}.log 10 >&4) 3>&1) | (read res; exit $res)) 4>&1 
+  if [ $? -ne 0 ]
+  then
+     echo "FAILED"
+     exit 1
+  fi
 }
 
 cmake_build_bipart() {
   dir=BiPart
   echo
   echo "#### Building and installing package: Bipart ####"
+  date
   echo
   (cd BiPart; if [ ! -d build ]; then mkdir build; fi; cd build; LEF_ROOT=$ACT_HOME GALOIS_INCLUDE=$ACT_HOME/include GALOIS_LIB=$ACT_HOME/lib DEF_ROOT=$ACT_HOME cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib ..  && make && make install) || exit 1
 }
@@ -68,8 +87,14 @@ act_tool_build() {
   dir=$1
   echo 
   echo "#### Building and installing package: $1 ####"
+  date
   echo
-  (cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ -x ./build.sh ]; then ./build.sh CXX=$cxx_compiler $needmake; else make CXX=$cxx_compiler $needmake depend && make CXX=$cxx_compiler $needmake && make install; fi) 2>logs/${dir}.err | ./gen_output.sh logs/${dir}.log $thresh || exit 1
+  ((((cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ -x ./build.sh ]; then ./build.sh CXX=$cxx_compiler $needmake; else make CXX=$cxx_compiler $needmake depend && make CXX=$cxx_compiler $needmake && make install; fi; echo $? >&3) 2>logs/${dir}.err | ./gen_output.sh logs/${dir}.log $thresh >&4) 3>&1) | (read res; exit $res)) 4>&1
+  if [ $? -ne 0 ]
+  then
+     echo "FAILED"
+     exit 1
+  fi
 }
 
 #
@@ -107,7 +132,11 @@ echo
 echo "####  Building and installing the core ACT library ####"
 echo
 export VLSI_TOOLS_SRC=`pwd`/act
-(cd act; ./configure $ACT_HOME CXX=$cxx_compiler; ./build; make install) 2>logs/act.err | ./gen_output.sh logs/act.log || exit 1
+((((cd act; ./configure $ACT_HOME CXX=$cxx_compiler; ./build; make install; echo $? >&3) 2> logs/act.err | ./gen_output.sh logs/act.log >&4) 3>&1) | (read res; exit $res)) 4>&1
+if [ $? -ne 0 ]
+then
+	echo "FAILED"; exit $?
+fi
 
 #
 # Build and install the Galois library
@@ -136,7 +165,7 @@ act_tool_build annotate
 # galois timer library
 if [ -f timing/actpin.h ]
 then
-	(cd timing; ./build_galois.sh) 2>logs/timing.err | ./gen_output.sh logs/timing.log || exit 1
+	(cd timing; ./build_galois.sh) 2>logs/timing0.err | ./gen_output.sh logs/timing0.log || exit 1
 fi
 
 # phyDB
@@ -147,17 +176,19 @@ cmake_build phyDB
 #
 if [ -f timing/actpin.h ]
 then
-    echo
-    echo "#### Building and installing timing library ####"
-    echo
-    (cd timing; ./build.sh) 2>logs/timing2.err | ./gen_output.sh logs/timing2.log || exit 1
+    act_tool_build timing
 fi
 
 # layout
 act_tool_build layout
 
 # BiPart
-cmake_build_bipart 2>logs/bipart.err | ./gen_output.sh logs/bipart.log
+((((cmake_build_bipart; echo $? >&3) 2>logs/bipart.err | ./gen_output.sh logs/bipart.log >&4) 3>&1) | (read res; exit $res)) 4>&1
+if [ $? -ne 0 ]
+then
+	echo "FAILED"
+	exit 1
+fi
 
 # Dali
 cmake_build Dali
