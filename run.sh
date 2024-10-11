@@ -9,7 +9,12 @@ test_act() {
   echo "************************************************************"
   echo "*>>> Testing: $msg"
   echo "************************************************************"
-  (cd $dir; make runtest) || exit 1
+  ((((cd $dir; make runtest; echo $? >&3) | cat >&4) 3>&1) | (read res; exit $res)) 4>&1
+  if [ $? -ne 0 ]
+  then
+      echo "FAILED"
+      exit 1
+  fi
   fi
 }
 
