@@ -1,0 +1,2 @@
+runtest:
+	@./run.sh

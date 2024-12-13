@@ -1,0 +1,226 @@
+import "x.act";
+import "syn/bdopt/_all_.act";
+open syn;
+import "expr.act";
+
+defproc sdt_counter_33_4 <: counter<3> ()
++{
+  syn::sdtvar<2> cv;
+  syn::sdtvar<3> a;
+  syn::sdtchan<3> O;
+  syn::sdtchan<2> C;
+}
+{
+ refine {
+   syn::muxoutport<3,1> O_muxo(O);
+//   { O.d[0] === O_muxo.m[0].d[0]  : "check-1!" };
+   syn::var_int_ports<2,1,4> var_cv(cv);
+   syn::muxinport<2,1> C_muxi(C);
+   syn::var_int_ports<3,3,3> var_a(a);
+//   { var_a.out[0].d[0] === var_a.v.d[0].t  : "check-2" };
+//   { var_a.out[1].d[0] === var_a.v.d[0].t  : "check-2" };
+   a1of1 c0;
+   syn::trueto1of2 e0;
+   a1of1 c1;
+   a1of1 c2;
+   syn::recvport<2,2> s_0(c2,C_muxi.m[0],var_cv.in[0]);
+   a1of1 c3;
+  syn::expr::nullint<2> e1(var_cv.out[0]);
+   syn::expr::blk0 e2(e1.out.d);
+   // wrap and ctl bypass
+   syn::expr::null e3();
+   e3.out.d[0]=e2.out;
+   e1.out.r = e3.out.r;
+   std::gates::ctree<1,false> ackmerge3;
+   /* delay: 1e-07 */
+   syn::delay<333> delayblk3 (ackmerge3.out, e3.out.a);
+   e1.out.a = ackmerge3.in[0];
+   //end expr blk0
+   syn::sdtvar<1> fvar0;
+   syn::var_int_ports<1,1,1> var_fvar0(fvar0);
+   a1of1 c4;
+   syn::transfer<1> s_1(c4, e3.out,var_fvar0.in[0]);
+   a1of1 c5;
+   syn::fullseq s_2(c5,c4);
+  syn::expr::nullint<1> e4(var_fvar0.out[0]);
+   syn::bdto1of2 e5;
+   e5.out.r = c5.r; c5.a = e4.out.r; e5.out.d=e4.out.d; e5.out.a=e4.out.a;
+  syn::expr::nullint<2> e6(var_cv.out[1]);
+   syn::expr::blk1 e7(e6.out.d);
+   // wrap and ctl bypass
+   syn::expr::null e8();
+   e8.out.d[0]=e7.out;
+   e6.out.r = e8.out.r;
+   std::gates::ctree<1,false> ackmerge8;
+   /* delay: 1e-07 */
+   syn::delay<333> delayblk8 (ackmerge8.out, e8.out.a);
+   e6.out.a = ackmerge8.in[0];
+   //end expr blk1
+   syn::sdtvar<1> fvar1;
+   syn::var_int_ports<1,1,1> var_fvar1(fvar1);
+   a1of1 c6;
+   syn::transfer<1> s_3(c6, e8.out,var_fvar1.in[0]);
+   a1of1 c7;
+   syn::fullseq s_4(c7,c6);
+  syn::expr::nullint<1> e9(var_fvar1.out[0]);
+   syn::bdto1of2 e10;
+   e10.out.r = c7.r; c7.a = e9.out.r; e10.out.d=e9.out.d; e10.out.a=e9.out.a;
+  syn::expr::nullint<2> e11(var_cv.out[2]);
+   syn::expr::blk2 e12(e11.out.d);
+   // wrap and ctl bypass
+   syn::expr::null e13();
+   e13.out.d[0]=e12.out;
+   e11.out.r = e13.out.r;
+   std::gates::ctree<1,false> ackmerge13;
+   /* delay: 1e-07 */
+   syn::delay<333> delayblk13 (ackmerge13.out, e13.out.a);
+   e11.out.a = ackmerge13.in[0];
+   //end expr blk2
+   syn::sdtvar<1> fvar2;
+   syn::var_int_ports<1,1,1> var_fvar2(fvar2);
+   a1of1 c8;
+   syn::transfer<1> s_5(c8, e13.out,var_fvar2.in[0]);
+   a1of1 c9;
+   syn::fullseq s_6(c9,c8);
+  syn::expr::nullint<1> e14(var_fvar2.out[0]);
+   syn::bdto1of2 e15;
+   e15.out.r = c9.r; c9.a = e14.out.r; e15.out.d=e14.out.d; e15.out.a=e14.out.a;
+  syn::expr::nullint<2> e16(var_cv.out[3]);
+   syn::expr::blk3 e17(e16.out.d);
+   // wrap and ctl bypass
+   syn::expr::null e18();
+   e18.out.d[0]=e17.out;
+   e16.out.r = e18.out.r;
+   std::gates::ctree<1,false> ackmerge18;
+   /* delay: 1e-07 */
+   syn::delay<333> delayblk18 (ackmerge18.out, e18.out.a);
+   e16.out.a = ackmerge18.in[0];
+   //end expr blk3
+   syn::sdtvar<1> fvar3;
+   syn::var_int_ports<1,1,1> var_fvar3(fvar3);
+   a1of1 c10;
+   syn::transfer<1> s_7(c10, e18.out,var_fvar3.in[0]);
+   a1of1 c11;
+   syn::fullseq s_8(c11,c10);
+  syn::expr::nullint<1> e19(var_fvar3.out[0]);
+   syn::bdto1of2 e20;
+   e20.out.r = c11.r; c11.a = e19.out.r; e20.out.d=e19.out.d; e20.out.a=e19.out.a;
+   a1of1 c12;
+  syn::expr::nullint<3> e21(var_a.out[0]);
+   syn::expr::blk4 e22(e21.out.d);
+   // wrap and ctl bypass
+   syn::expr::nullint<3> e23();
+   e23.out.d=e22.out;
+   e21.out.r = e23.out.r;
+   std::gates::ctree<1,false> ackmerge23;
+   /* delay: 1e-07 */
+   syn::delay<333> delayblk23 (ackmerge23.out, e23.out.a);
+   e21.out.a = ackmerge23.in[0];
+   //end expr blk4
+   syn::sdtvar<3> fvar4;
+   syn::var_int_ports<3,1,1> var_fvar4(fvar4);
+   a1of1 c13;
+   a1of1 c14;
+   syn::fullseq s_9(c13,c14);
+   syn::transfer<3> s_10(c14, e23.out,var_fvar4.in[0]);
+   a1of1 c15;
+  syn::expr::nullint<3> e24(var_fvar4.out[0]);
+   syn::transfer<3> s_11(c15, e24.out,var_a.in[0]);
+   syn::semi<2> s_12(c12,{c13,c15});
+   a1of1 c16;
+  syn::expr::nullint<3> e25(var_a.out[1]);
+   syn::expr::blk5 e26(e25.out.d);
+   // wrap and ctl bypass
+   syn::expr::nullint<3> e27();
+   e27.out.d=e26.out;
+   e25.out.r = e27.out.r;
+   std::gates::ctree<1,false> ackmerge27;
+   /* delay: 1e-07 */
+   syn::delay<333> delayblk27 (ackmerge27.out, e27.out.a);
+   e25.out.a = ackmerge27.in[0];
+   //end expr blk5
+   syn::sdtvar<3> fvar5;
+   syn::var_int_ports<3,1,1> var_fvar5(fvar5);
+   a1of1 c17;
+   a1of1 c18;
+   syn::fullseq s_13(c17,c18);
+   syn::transfer<3> s_14(c18, e27.out,var_fvar5.in[0]);
+   a1of1 c19;
+  syn::expr::nullint<3> e28(var_fvar5.out[0]);
+   syn::transfer<3> s_15(c19, e28.out,var_a.in[1]);
+   syn::semi<2> s_16(c16,{c17,c19});
+   a1of1 c20;
+   syn::expr::blk6 e29();
+   // wrap and ctl bypass
+   syn::expr::nullint<3> e30();
+   e30.out.d=e29.out;
+   e30.out.a = e30.out.r;
+   //end expr blk6
+   syn::transfer<3> s_17(c20, e30.out,var_a.in[2]);
+   a1of1 c21;
+  syn::expr::nullint<3> e31(var_a.out[2]);
+//   { var_a.out[2].d[0] === var_a.v.d[0].t  : "check-2" };
+//   { e31.out.d[0] === var_a.v.d[0].t  : "check-2" };
+   syn::expr::blk7 e32(e31.out.d);
+//   { e32.out[0] === var_a.v.d[0].t  : "check-2" };
+   // wrap and ctl bypass
+   syn::expr::nullint<3> e33();
+   e33.out.d=e32.out;
+   e31.out.r = e33.out.r;
+//   { e33.out.d[0] === var_a.v.d[0].t  : "check-2" };
+   std::gates::ctree<1,false> ackmerge33;
+   /* delay: 1e-07 */
+   syn::delay<333> delayblk33 (ackmerge33.out, e33.out.a);
+   e31.out.a = ackmerge33.in[0];
+   //end expr blk7
+
+
+   /*---- this is connected here ----*/
+
+//   { e33.out.d[0] === var_a.v.d[0].t  : "check-pre" };
+
+
+/** if we comment this, it breaks! **/
+//  { O.d[0] === O_muxo.m[0].d[0] : "preHmm" };
+
+ //  syn::transfer<3> s_18(c21, e33.out,O_muxo.m[0]);
+
+   syn::transfer<3> s_18;
+//   s_18.c = c21;
+   ${ "------------------**********--------------" };
+   ${ "------------------**********--------------" };
+   ${ "------------------**********--------------" };
+   ${ "------------------**********--------------" };
+   s_18.e = e33.out;
+   s_18.ch = O_muxo.m[0];
+
+   { e33.out.d[0] === var_a.v.d[0].t  : "check-pre-1" };
+//   { e33.out.d[0] === var_a.v.d[0].t  : "check-X3" };
+
+
+/*-- what transfer does internally
+
+   c21.r = e33.out.r;
+   e33.out.a = O_muxo.m[0].r;
+   e33.out.d = O_muxo.m[0].d;
+   c21.a = O_muxo.m[0].a;
+
+--*/
+
+   /*---- but now is disconnected! ----*/
+
+//   { e33.out.d[0] === var_a.v.d[0].t  : "check-X" };
+
+
+//   { e33.out.d[0] === O_muxo.m[0].d[0] : "Hmm" };
+//   { O.d[0] === O_muxo.m[0].d[0] : "Hmm2" };
+   syn::select<4,false> s_19(c3,{e5.out,e10.out,e15.out,e20.out},{c12,c16,c20,c21});
+   syn::semi<2> s_20(c1,{c2,c3});
+   syn::loop<1> s_21(c0,{e0.out},{c1});
+/*--- connect reset to go signal ---*/
+   a1of1 c22;
+   syn::sinit s22 (c0);
+  { O.d[0] === var_a.v.d[0].t  : "check!" };
+ }
+}
+

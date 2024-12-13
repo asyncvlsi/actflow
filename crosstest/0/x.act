@@ -1,0 +1,15 @@
+template<pint N>
+defproc counter(chan?(int<2>) C; chan!(int<N>) O)
+{
+  int<N> a;
+  int<2> cv;
+  chp {
+    *[ C?cv;
+       [cv=0->a:=a+1
+      []cv=1-> a:= a-1
+      []cv=2 -> a:=0
+      []cv=3 -> O!a
+       ]
+     ]
+  }
+}

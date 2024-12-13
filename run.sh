@@ -27,3 +27,4 @@ test_act chp2prs "chp2prs"
 
 test_act layout "layout library"
 test_act timing "cyclone"
+test_act crosstest "Cross Tools test"

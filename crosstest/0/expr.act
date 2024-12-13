@@ -1,0 +1,293 @@
+namespace syn {
+
+export namespace expr {
+
+/* -- declarations -- */
+export defproc blk0 (bool? e1[2]; bool! out);
+
+export defproc blk0 (bool? e1[2]; bool! out)
+{
+  spec { hazard(*) }
+
+   /*--- types ---*/
+   syn::NOR2X1 _5_;
+   bool _xtpa0[2];
+   bool _0_;
+   bool _1_;
+   syn::TIELOX1 _6_;
+   bool _xtpa2;
+   bool _4_;
+   bool _2_;
+   bool _xtpa1;
+   bool _3_;
+   /*--- connections ---*/
+   _5_(.A=_0_, .B=_1_, .Y=_2_);
+   _6_(.Y=_3_);
+_xtpa0=e1;
+   _xtpa1=_3_;
+   _xtpa2=out;
+   _0_=e1[0];
+   _1_=e1[1];
+   out=_2_;
+}
+
+/* -- declarations -- */
+export defproc blk1 (bool? e6[2]; bool! out);
+
+export defproc blk1 (bool? e6[2]; bool! out)
+{
+  spec { hazard(*) }
+
+   /*--- types ---*/
+   bool _5_;
+   bool _xtpa0[2];
+   bool _0_;
+   bool _1_;
+   bool _6_;
+   bool _xtpa2;
+   bool _4_;
+   syn::TIEHIX1 _9_;
+   bool _2_;
+   bool _xtpa1;
+   bool _3_;
+   syn::INVX1 _7_;
+   syn::NOR2X1 _8_;
+   /*--- connections ---*/
+   _7_(.A=_0_, .Y=_2_);
+   _8_(.A=_2_, .B=_1_, .Y=_3_);
+   _9_(.Y=_4_);
+_xtpa0=e6;
+   _xtpa1=_4_;
+   _xtpa2=out;
+   _0_=e6[0];
+   _1_=e6[1];
+   out=_3_;
+}
+
+/* -- declarations -- */
+export defproc blk2 (bool? e11[2]; bool! out);
+
+export defproc blk2 (bool? e11[2]; bool! out)
+{
+  spec { hazard(*) }
+
+   /*--- types ---*/
+   bool _04_;
+   bool _06_;
+   bool _xtpa0[2];
+   bool _05_;
+   syn::TIEHIX1 _10_;
+   bool _03_;
+   syn::TIELOX1 _11_;
+   bool _xtpa2;
+   syn::INVX1 _08_;
+   bool _02_;
+   bool _07_;
+   bool _xtpa1[2];
+   syn::NOR2X1 _09_;
+   bool _01_;
+   bool _00_;
+   /*--- connections ---*/
+   _08_(.A=_01_, .Y=_02_);
+   _09_(.A=_02_, .B=_00_, .Y=_03_);
+   _10_(.Y=_04_);
+   _11_(.Y=_05_);
+_xtpa0=e11;
+   _xtpa1[1]=_04_;
+   _xtpa1[0]=_05_;
+   _xtpa2=out;
+   _01_=e11[1];
+   _00_=e11[0];
+   out=_03_;
+}
+
+/* -- declarations -- */
+export defproc blk3 (bool? e16[2]; bool! out);
+
+export defproc blk3 (bool? e16[2]; bool! out)
+{
+  spec { hazard(*) }
+
+   /*--- types ---*/
+   bool _5_;
+   bool _xtpa0[2];
+   bool _0_;
+   bool _1_;
+   bool _6_;
+   bool _xtpa2;
+   bool _4_;
+   bool _2_;
+   bool _xtpa1[2];
+   bool _3_;
+   syn::AND2X1 _7_;
+   syn::TIEHIX1 _8_;
+   /*--- connections ---*/
+   _7_(.A=_0_, .B=_1_, .Y=_2_);
+   _8_(.Y=_3_);
+_xtpa0=e16;
+   _xtpa1[1]=_3_;
+   _xtpa1[0]=_3_;
+   _xtpa2=out;
+   _0_=e16[0];
+   _1_=e16[1];
+   out=_2_;
+}
+
+/* -- declarations -- */
+export defproc blk4 (bool? e21[3]; bool! out[3]);
+
+export defproc blk4 (bool? e21[3]; bool! out[3])
+{
+  spec { hazard(*) }
+
+   /*--- types ---*/
+   bool _04_;
+   bool _06_;
+   syn::XOR2X1 _12_;
+   bool _xtpa0[3];
+   bool _05_;
+   syn::XNOR2X1 _13_;
+   bool _xtpa4[4];
+   syn::INVX1 _10_;
+   bool _03_;
+   syn::NAND2X1 _11_;
+   bool _xtpa2[4];
+   syn::TIELOX1 _15_;
+   bool _08_;
+   bool _02_;
+   bool _07_[3];
+   bool _xtpa1;
+   bool _xtpa3[4];
+   bool _09_;
+   syn::TIEHIX1 _14_;
+   bool _01_;
+   bool _00_;
+   /*--- connections ---*/
+   _10_(.A=_00_, .Y=_04_);
+   _11_(.A=_00_, .B=_01_, .Y=_03_);
+   _12_(.A=_00_, .B=_01_, .Y=_05_);
+   _13_(.A=_02_, .B=_03_, .Y=_06_);
+   _14_(.Y=_08_);
+   _15_(.Y=_09_);
+_07_[0]=e21[0];
+   _xtpa0=e21;
+   _xtpa1=_08_;
+   _xtpa2[3]=_09_;
+   _xtpa2[2]=e21[2];
+   _xtpa2[1]=e21[1];
+   _xtpa2[0]=e21[0];
+   _xtpa3[3]=_09_;
+   _xtpa3[2]=_09_;
+   _xtpa3[1]=_09_;
+   _xtpa3[0]=_08_;
+   _xtpa4[3]=GND;
+   _xtpa4[2]=out[2];
+   _xtpa4[1]=out[1];
+   _xtpa4[0]=out[0];
+   _00_=e21[0];
+   out[0]=_04_;
+   _01_=e21[1];
+   out[1]=_05_;
+   _02_=e21[2];
+   out[2]=_06_;
+}
+
+/* -- declarations -- */
+export defproc blk5 (bool? e25[3]; bool! out[3]);
+
+export defproc blk5 (bool? e25[3]; bool! out[3])
+{
+  spec { hazard(*) }
+
+   /*--- types ---*/
+   bool _04_;
+   bool _06_;
+   syn::INVX1 _12_;
+   bool _xtpa0[3];
+   bool _05_;
+   syn::NOR2X1 _13_;
+   bool _xtpa4[4];
+   bool _10_;
+   bool _03_;
+   bool _11_;
+   bool _xtpa2[4];
+   syn::XOR2X1 _15_;
+   bool _08_[3];
+   bool _02_;
+   bool _07_[3];
+   bool _xtpa1;
+   syn::TIEHIX1 _16_;
+   syn::TIELOX1 _17_;
+   bool _xtpa3[4];
+   bool _09_;
+   syn::XNOR2X1 _14_;
+   bool _01_;
+   bool _00_;
+   /*--- connections ---*/
+   _12_(.A=_00_, .Y=_04_);
+   _13_(.A=_00_, .B=_01_, .Y=_03_);
+   _14_(.A=_00_, .B=_01_, .Y=_05_);
+   _15_(.A=_02_, .B=_03_, .Y=_06_);
+   _16_(.Y=_09_);
+   _17_(.Y=_10_);
+_07_[0]=e25[0];
+   _08_[0]=e25[0];
+   _xtpa0=e25;
+   _xtpa1=_09_;
+   _xtpa2[3]=_10_;
+   _xtpa2[2]=e25[2];
+   _xtpa2[1]=e25[1];
+   _xtpa2[0]=e25[0];
+   _xtpa3[3]=_10_;
+   _xtpa3[2]=_10_;
+   _xtpa3[1]=_10_;
+   _xtpa3[0]=_09_;
+   _xtpa4[3]=GND;
+   _xtpa4[2]=out[2];
+   _xtpa4[1]=out[1];
+   _xtpa4[0]=out[0];
+   _00_=e25[0];
+   out[0]=_04_;
+   _01_=e25[1];
+   _02_=e25[2];
+   out[1]=_05_;
+   out[2]=_06_;
+}
+
+/* -- declarations -- */
+export defproc blk6 (bool! out[3]);
+
+export defproc blk6 (bool! out[3])
+{
+  spec { hazard(*) }
+
+   /*--- types ---*/
+   bool _xtpa0;
+   bool _0_;
+   syn::TIELOX1 _1_;
+   /*--- connections ---*/
+   _1_(.Y=_0_);
+_xtpa0=_0_;
+   out[2]=_0_;
+   out[1]=_0_;
+   out[0]=_0_;
+}
+
+/* -- declarations -- */
+export defproc blk7 (bool? e31[3]; bool out[3]);
+
+export defproc blk7 (bool? e31[3]; bool out[3])
+{
+  spec { hazard(*) }
+
+   /*--- types ---*/
+   bool _xtpa0[3];
+   /*--- connections ---*/
+   _xtpa0=e31;
+   out=e31;
+}
+
+
+}
+
+}
