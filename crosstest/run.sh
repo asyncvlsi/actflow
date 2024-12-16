@@ -47,10 +47,8 @@ do
 	if [ $ok -eq 0 ]
 	then
 		echo 
-		myecho "** FAILED TEST $count: stdout"
+		echo "** FAILED TEST $count **"
 		fail=`expr $fail + 1`
-		echo " **"
-		myecho " "
 		num=0
 	fi
 	count=`expr $count + 1`
@@ -63,7 +61,6 @@ do
                         num=0
                 fi
         else
-                echo " **"
                 myecho " "
                 num=0
         fi
