@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "Starting: `date`"
+
 if [ x$ACT_HOME = x ]
 then
 	echo "Please set the environment variable ACT_HOME to the install directory"
