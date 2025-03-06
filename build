@@ -46,7 +46,7 @@ fi
 #
 # Shell re-direct idiom used
 #
-# ((((command; echo $? >&3) | pipeline >&4) 3>&1) | (read res; exit $res)) 4>&1 
+# ((((command; echo $? >&3) | pipeline >&4) 3>&1) | (read res; exit $res)) 4>&1
 #
 #  1. Run command and capture its exit status on file descriptor (fd) 3
 #  2. Redirect stdout to fd 4
@@ -58,7 +58,7 @@ fi
 cmake_build() {
   dir=$1
   shift
-  echo 
+  echo
   echo "#### Building and installing package: $dir ####"
   date
   echo
@@ -87,7 +87,7 @@ act_tool_build() {
      thresh=$2
   fi
   dir=$1
-  echo 
+  echo
   echo "#### Building and installing package: $1 ####"
   date
   echo
@@ -105,11 +105,12 @@ act_tool_build() {
 echo "Applying patch to Galois library..."
 if [ ! -f patched ]
 then
-   (cd Galois; 
+   (cd Galois;
      patch -p0 < ../extra/Galois;
      patch -p0 < ../extra/Galois2;
      patch -p0 < ../extra/Galois3;
-     patch -p0 < ../extra/Galois4
+     patch -p0 < ../extra/Galois4;
+     patch -p0 < ../extra/Galois5
    )
    touch patched
 fi
@@ -124,7 +125,7 @@ fi
 
 echo "Log files and errors can be found in the logs/ directory."
 echo "Each number displayed corresponds to 10 lines in the output log file."
-echo 
+echo
 echo "Starting: `date`"
 
 #
@@ -161,7 +162,7 @@ echo
 act_tool_build annotate
 
 #
-# Build and install... 
+# Build and install...
 #
 
 # galois timer library
