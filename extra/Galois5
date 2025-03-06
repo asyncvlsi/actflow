@@ -1,6 +1,6 @@
 --- lonestar/scientific/cpu/longestedge/test/catch.hpp 2025-02-05 17:47:01.00000000 -0700
 +++ lonestar/scientific/cpu/longestedge/test/catch.hpp 2025-02-05 17:48:01.00000000 -0700
-@@ -10732,7 +10732,14 @@ namespace Catch {
+@@ -10735,7 +10735,14 @@ namespace Catch {
  
      // 32kb for the alternate stack seems to be sufficient. However, this value
      // is experimentally determined, so that's not guaranteed.
@@ -12,6 +12,6 @@
 +#else
 +    static constexpr std::size_t sigStackSize = 32768; // >= MINSIGSTKSZ ? 32768 : MINSIGSTKSZ;
 +#endif
-    
+
      static SignalDefs signalDefs[] = {
          { SIGINT,  "SIGINT - Terminal interrupt signal" },
