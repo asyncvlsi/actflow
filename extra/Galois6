@@ -1,0 +1,10 @@
+--- libgalois/include/galois/substrate/NumaMem.h	2022-06-09 13:03:35
++++ libgalois/include/galois/substrate/NumaMem.h.new	2025-07-02 14:30:43
+@@ -21,6 +21,7 @@
+ #define GALOIS_SUBSTRATE_NUMAMEM
+ 
+ #include <cstddef>
++#include <cstdint>
+ #include <memory>
+ #include <vector>
+ 

@@ -106,11 +106,9 @@ echo "Applying patch to Galois library..."
 if [ ! -f patched ]
 then
    (cd Galois;
-     patch -p0 < ../extra/Galois;
-     patch -p0 < ../extra/Galois2;
-     patch -p0 < ../extra/Galois3;
-     patch -p0 < ../extra/Galois4;
-     patch -p0 < ../extra/Galois5
+     for i in ../extra/Galois*;
+     do patch -p0 < $i;
+     done
    )
    touch patched
 fi
