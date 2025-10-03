@@ -237,8 +237,8 @@ fi
 
 
 #
-# prs2fpga
-act_tool_build prs2fpga
+# fpga_proto
+act_tool_build fpga_proto
 
 #
 # xcell

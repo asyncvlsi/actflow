@@ -62,9 +62,6 @@
 	path = layout
 	url = https://github.com/asyncvlsi/layout
 	branch = master
-[submodule "prs2fpga"]
-	path = prs2fpga
-	url = https://github.com/asyncvlsi/prs2fpga
 [submodule "xcell"]
 	path = xcell
 	url = https://github.com/asyncvlsi/xcell
@@ -80,3 +77,6 @@
 [submodule "annotate"]
 	path = annotate
 	url = https://github.com/asyncvlsi/annotate
+[submodule "fpga_proto"]
+	path = fpga_proto
+	url = https://github.com/asyncvlsi/fpga_proto
