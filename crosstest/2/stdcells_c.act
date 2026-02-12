@@ -1,0 +1,514 @@
+import "globals.act";
+
+
+/*-- inverters --*/
+
+defproc inv (bool? A; bool! Y)
+{
+  prs {
+    A => Y-
+  }
+}
+
+
+  
+template<pint nf>
+defproc szinv <: inv()
+{
+  [nf = 0 -> sizing { Y {-1} }
+  [] else -> sizing { Y {-2*nf,svt,nf} }
+  ]
+}
+
+export defcell INVX1 <: szinv<0>() { } 
+export defcell INVX2 <: szinv<1>() { } 
+export defcell INVX4 <: szinv<2>() { }
+export defcell INVX8 <: szinv<4>() { }
+
+/*-- clock delay buffers --*/
+/*
+template<pint N>
+defproc dbuf (bool? A; bool! Y)
+{
+  {N > 0 : "Delay buffer needs at least one stage!"};
+  bool sig[2*N+1];
+  sig[0] = A;
+  sig[2*N] = Y;
+  prs {
+    (i:2*N: ~sig[i] <80;2> -> sig[i+1]+
+             sig[i] <40;2> -> sig[i+1]-
+     )
+  }
+}
+
+export defproc CLKBUF1 <: dbuf<2>() { }
+export defproc CLKBUF2 <: dbuf<3>() { }
+export defproc CLKBUF3 <: dbuf<4>() { }
+*/
+
+/*--  signal buffers --*/
+defproc buf (bool? A; bool! Y)
+{
+  prs {
+    A => Y+
+  }
+}
+/*
+defproc buf (bool? A; bool! Y)
+{
+  bool _Y;
+  prs {
+    A => _Y-
+   _Y => Y-
+  }
+}*/
+  
+export defcell BUFX2 <: buf()
+{
+  sizing { Y {-2} }
+}
+  
+export defcell BUFX4 <: buf()
+{
+  sizing { Y {-4,2} }
+}
+
+export defcell CLKBUF1 <: buf() { }
+export defcell CLKBUF2 <: buf() { }
+export defcell CLKBUF3 <: buf() { }
+  
+/*-- simple gates --*/
+  
+export defcell NOR2X1 (bool? A, B; bool! Y)
+{
+  prs {
+     A | B => Y-
+  }
+  sizing { Y {-1} }
+}
+  
+export defcell NOR3X1 (bool? A, B, C; bool! Y)
+{
+  prs {
+    A | B | C => Y-
+  }
+  sizing { Y {-1} }
+} 
+
+
+export defcell OR2X1 (bool? A, B; bool! Y)
+{
+  prs {
+     A | B => Y+
+  }
+}
+
+export defcell OR2X2 (bool? A, B; bool! Y)
+{
+  prs {
+     A | B => Y+
+  }
+} 
+
+/*
+export defcell OR2X1 (bool? A, B; bool! Y)
+{
+  bool _Y;
+  prs {
+     A | B => _Y-
+     _Y => Y-
+  }
+  sizing { _Y{-1}; Y{-1} }
+}
+
+  
+export defcell OR2X2 (bool? A, B; bool! Y)
+{
+  bool _Y;
+  prs {
+     A | B => _Y-
+     _Y => Y-
+  }
+  sizing { _Y{-1}; Y{-2} }
+} 
+*/
+
+export defcell NAND2X1 (bool? A, B; bool! Y)
+{
+  prs {  
+    A & B => Y-
+  }
+  sizing { Y{-1} }
+}
+  
+export defcell NAND3X1 (bool? A, B, C; bool! Y)
+{
+  prs {  
+    A & B & C => Y-
+  }
+  sizing { Y{-1} }
+}
+
+export defcell AND2X1 (bool? A, B; bool! Y) 
+{
+  prs {  
+    A & B => Y+ 
+  }
+} 
+
+export defcell AND2X2 (bool? A, B; bool! Y) 
+{ 
+  prs {
+    A & B => Y+
+  }
+}
+
+/*
+export defcell AND2X1 (bool? A, B; bool! Y) 
+{
+  bool _Y;
+  prs {  
+    A & B => _Y- 
+   _Y => Y-
+  }
+  sizing { _Y{-1}; Y{-1} }
+} 
+
+export defcell AND2X2 (bool? A, B; bool! Y) 
+{ 
+  bool _Y;
+  prs {
+    A & B => _Y-
+   _Y => Y-
+  }
+  sizing { _Y{-1}; Y{-2} }
+}
+*/
+
+export defcell XOR2X1 (bool? A, B; bool! Y)
+{
+  prs {
+   [keeper=0] ~B & A | B & ~A -> Y+
+    ~B & ~A | B & A -> Y-
+  }
+}
+
+export defcell XNOR2X1 (bool? A, B; bool! Y)
+{
+  prs {
+   [keeper=0] ~B & ~A | B & A -> Y+
+    B & ~A | ~B & A -> Y-
+  }
+} 
+/*
+export defcell XOR2X1 (bool? A, B; bool! Y)
+{
+  bool _A, _B;
+  prs {
+    A => _A-
+    B => _B-
+      
+   [keeper=0] ~B & ~_A | ~_B & ~A -> Y+
+    _B & _A | B & A -> Y-
+  }
+  sizing { _A{-1}; _B{-1}; Y{-1} }
+}
+
+export defcell XNOR2X1 (bool? A, B; bool! Y)
+{
+  bool _A, _B;
+  prs {
+    A => _A-
+    B => _B-
+      
+   [keeper=0] ~B & ~A | ~_B & ~_A -> Y+
+    B & _A | _B & A -> Y-
+  }
+  sizing { _A{-1}; _B{-1}; Y{-1} }
+} 
+*/
+
+export defcell MUX2X1 (bool? A, B, S; bool! Y)
+{
+  // Y = !( S ? A : B )
+  prs {
+   [keeper=0] ~A & S | ~B & ~S -> Y+
+    A & S | B & ~S -> Y-
+  }
+}
+/*
+export defcell MUX2X1 (bool? A, B, S; bool! Y)
+{
+  // Y = !( S ? A : B )
+  bool _S;
+  prs {
+    S => _S-
+
+   [keeper=0] ~A & ~_S | ~B & ~S -> Y+
+    A & S | B & _S -> Y-
+  }
+  sizing { _S{-1}; Y{-1} }
+}
+*/
+export defcell OAI21X1 (bool? A, B, C; bool! Y)
+{
+  prs {
+    (A | B) & C => Y-  
+  }
+  sizing { Y{-1} }
+}
+
+export defcell AOI21X1 (bool? A, B, C; bool! Y) 
+{ 
+  prs {
+    A & B | C => Y-
+  }
+  sizing { Y{-1} }
+}
+
+export defcell OAI22X1 (bool? A, B, C, D; bool! Y)
+{
+  // Y = !((A|B) & (C|D))
+  prs {
+    (A | B) & (C | D) => Y-  
+  }
+  sizing { Y{-1} }
+}
+
+export defcell AOI22X1 (bool? A, B, C, D; bool! Y) 
+{ 
+  prs {
+    A & B | C & D => Y-
+  }
+  sizing { Y{-1} }
+}
+
+  
+/*--- arithmetic ---*/
+  
+export defcell HAX1 (bool? A, B; bool! YC, YS)
+{
+  prs {
+     A & B => YC+
+
+    (~(A & B)) & (A | B) => YS+
+  }
+}
+/*
+export defcell HAX1 (bool? A, B; bool! YC, YS)
+{
+  bool _YC, _YS;
+  prs {
+     A & B => _YC-
+    _YC  => YC-
+
+    _YC & (A | B) => _YS-
+    _YS => YS-
+  }
+  sizing { _YC{-1}; YC{-1}; _YS{-1}; YS{-1} }
+}
+*/
+
+export defcell FAX1 (bool? A, B, C; bool! YC, YS)
+{
+  prs {
+    (A|B) & C | A&B => YC+
+
+    (~A|~B|~C)&((A|B) & C | A&B) | ~A & ~B & ~C -> YS-
+
+    (A|B|C) & (~((A|B) & C | A&B)) | A&B&C -> YS+  
+  }
+}
+/*  
+export defcell FAX1 (bool? A, B, C; bool! YC, YS)
+{
+  bool _YC, _YS;
+  prs {
+    (A|B) & C | A&B => _YC-
+    _YC => YC-
+
+    (~A<40>|~B<36>|~C<36>)&~_YC<36> | ~A<48>&~B & ~C -> _YS+
+    (A<20>|B|C) & _YC | A&B&C -> _YS-  
+
+    _YS => YS-
+  }
+  sizing { _YC{-1}; YC{-1}; YS{-1} }
+}
+*/
+
+/*--- buffered transmission gates ---*/
+
+export defcell TBUF1 (bool? A, EN; bool! Y)
+{
+  prs {
+   ~A & EN -> Y+
+    A & EN -> Y-
+  }
+}
+ 
+export defcell TBUF2 (bool? A, EN; bool! Y)
+{
+  prs {
+   ~A & EN -> Y+
+    A & EN -> Y-
+  }
+}
+/*  
+export defcell TBUF1 (bool? A, EN; bool! Y)
+{
+  bool _en;
+  prs {
+    EN => _en-
+
+   ~A & ~_en -> Y+
+    A & EN -> Y-
+  }
+  sizing { _en{-1}; Y{-1} }
+}
+ 
+export defcell TBUF2 (bool? A, EN; bool! Y)
+{
+  bool _en;
+  prs {
+    EN => _en-
+
+   ~A & ~_en -> Y+
+    A & EN -> Y-
+  }
+  sizing { _en{-2}; Y{-2,2} }
+}
+*/
+/*--- clocked elements ---*/
+/*
+export defcell LATCH (bool? CLK, D; bool! Q)
+{
+  bool _q, _clk;
+  prs {
+    CLK => _clk-
+
+   [keeper=0] D<10> & CLK -> _q-
+   ~D<20> & ~_clk -> _q+
+
+   //feedback
+  [iskeeper=1;keeper=0] ~Q<10> & ~CLK -> _q+    
+  [iskeeper=1] Q<10> & _clk -> _q-
+
+    _q => Q-
+  }
+  sizing { _clk{-2}; Q{-2} }
+}
+*/  
+
+export defcell LATCH (bool? CLK, D; bool! Q)
+{
+  prs {
+
+   D<10> & CLK -> Q+
+   ~D<20> & CLK -> Q-
+
+  }
+}
+ 
+export defproc DFFPOSX1 (bool? CLK, D; bool! Q)
+{
+  bool _q, __q, QB, _clk;
+
+  prs {
+    CLK<20> -> _clk-
+   ~CLK<40> -> _clk+
+
+    _q<10> -> __q-
+   ~_q<20> -> __q+
+
+   QB<20> -> Q-
+  ~QB<40> -> Q+
+
+   [keeper=0] D<10> & _clk -> _q-
+  ~D<20> & ~CLK -> _q+
+
+  // feedback
+  [iskeeper=1;keeper=0] ~__q<20> & ~_clk -> _q+
+  [iskeeper=1]  __q<10> & CLK -> _q-
+
+  [keeper=0] ~__q<20> & ~_clk -> QB+
+   __q<10> & CLK -> QB-  
+
+  // feedback
+  [iskeeper=1;keeper=0] ~Q<10> & ~CLK -> QB+
+  [iskeeper=1] Q<10> & _clk -> QB-
+  }
+}
+ 
+export defproc DFFNEGX1 (bool? CLK, D; bool! Q)
+{
+  bool _q, __q, QB, _clk;
+
+  prs {
+    CLK<20> -> _clk-
+   ~CLK<40> -> _clk+
+
+    _q<10> -> __q-
+   ~_q<20> -> __q+
+
+   QB<20> -> Q-
+  ~QB<40> -> Q+
+
+   [keeper=0] D<10> & CLK -> _q-
+  ~D<20> & ~_clk -> _q+
+
+  // feedback
+  [iskeeper=1;keeper=0] ~__q<20> & ~CLK -> _q+
+  [iskeeper=1]  __q<10> & _clk -> _q-
+
+  [keeper=0] ~__q<20> & ~CLK -> QB+
+   __q<10> & _clk -> QB-  
+
+  // feedback
+  [iskeeper=1;keeper=0] ~Q<10> & ~_clk -> QB+
+  [iskeeper=1] Q<10> & CLK -> QB-
+  }
+}
+
+export defproc DFFSR (bool? CLK, R, S, D; bool! Q)
+{
+  bool _clk, __clk, QB, _dl;
+  bool _Ro, _So;
+  bool _So2;
+  bool _qb;
+
+  prs {
+    QB<10> -> Q-
+   ~QB<20> -> Q+
+
+    CLK<10> -> _clk-
+   ~CLK<20> -> _clk+
+
+    _clk<10> -> __clk-
+   ~_clk<20> -> __clk+
+
+   R<20> & _So -> _Ro-
+  ~R<20> | ~_So -> _Ro+
+
+    S<20> & _dl -> _So-
+   ~S<20> | ~_dl -> _So+
+
+   [keeper=0] D<10> & _clk -> _dl-
+            ~D<20> & ~__clk<10> -> _dl+
+
+    R<20> & _qb -> QB-
+   ~R<20> | ~_qb -> QB+
+
+    QB<20> & S -> _So2-
+   ~QB<20> | ~S -> _So2+
+
+   // input stage feedback
+   transgate<10> (__clk,_clk,_Ro,_dl)
+
+   // input to output
+   transgate<10> (__clk,_clk,_So,_qb)
+
+  // output feedback
+   transgate<10> (_clk,__clk,_So2,_qb)
+  }
+}
+

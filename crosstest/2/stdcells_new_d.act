@@ -1,0 +1,39 @@
+export defcell ginvx0 (bool? in[1]; bool! out)
+{
+
+/* instances */
+
+/* connections */
+prs  * {
+in[0]<5> -> out-
+~in[0]<10> -> out+
+}
+}
+
+export defcell ginvx1 (bool? in[1]; bool! out)
+{
+
+/* instances */
+
+/* connections */
+prs  * {
+in[0]<20> -> out-
+~in[0]<40> -> out+
+}
+}
+
+export defcell LATCHINV (bool? CLK, D, q; bool! _q)
+{
+  bool _clk;
+  prs {
+    CLK => _clk-
+
+   [keeper=0] D<10> & CLK -> _q-
+   ~D<20> & ~_clk -> _q+
+
+   //feedback
+  [iskeeper=1;keeper=0] ~q<10> & ~CLK -> _q+
+  [iskeeper=1] q<10> & _clk -> _q-
+
+  }
+}

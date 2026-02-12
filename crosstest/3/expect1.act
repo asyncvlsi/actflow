@@ -1,0 +1,20 @@
+defproc p ();
+
+defproc p ()
+{
+
+/* instances */
+int<32> y;
+int<32> x;
+
+/* connections */
+chp {
+*[true -> y:=0x1]
+}
+}
+
+
+/* instances */
+p x;
+
+/* connections */

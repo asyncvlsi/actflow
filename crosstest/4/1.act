@@ -1,0 +1,7 @@
+import std::cells;
+open std::cells => newns;
+import std::cells;
+
+std::cells::AND2X1 a;
+
+newns::OR2X1 b;

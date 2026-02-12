@@ -1,0 +1,69 @@
+export defcell CELEM2 (bool? A; bool? B; bool! Y)
+{
+
+/* instances */
+
+/* connections */
+prs {
+A&B -> Y-
+~A&~B -> Y+
+}
+}
+
+export defcell UACELEM2 (bool? A; bool? B; bool! Y)
+{
+
+/* instances */
+
+/* connections */
+prs {
+A&B -> Y-
+~A -> Y+
+}
+}
+
+export defcell DACELEM2 (bool? A; bool? B; bool! Y)
+{
+
+/* instances */
+
+/* connections */
+prs {
+~A&~B -> Y+
+A -> Y-
+}
+}
+
+export defcell PCELEM2 (bool? A; bool? B; bool! Y)
+{
+
+/* connections */
+prs {
+A&B -> Y+
+~A&~B -> Y-
+}
+}
+
+export defcell gcelem2x0 (bool? in[2]; bool! out)
+{
+
+/* instances */
+
+/* connections */
+prs  * {
+in[0]<10>&in[1]<10> -> out-
+~in[0]<14>&~in[1]<14> -> out+
+}
+}
+
+export defcell ccginvx0 (bool? in[1]; bool! out)
+{
+
+/* instances */
+
+/* connections */
+prs  * {
+in[0]<5> -> out-
+~in[0]<7> -> out+
+}
+}
