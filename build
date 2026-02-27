@@ -203,9 +203,6 @@ cmake_build SPRoute
 # TritonRoute-WXL
 cmake_build TritonRoute-WXL
 
-# interact
-act_tool_build interact
-
 # stdlib
 act_tool_build stdlib
 
@@ -218,11 +215,12 @@ then
    act_tool_build expropt_commercial
 fi
 
-#
 # chp2prs
 act_tool_build chp2prs
 
-#
+# interact
+act_tool_build interact
+
 # dflowmap
 cmake_build dflowmap
 
@@ -234,7 +232,6 @@ then
     cmake_build dflowmap_netlist
     cmake_build dflowmap
 fi
-
 
 #
 # fpga_proto
