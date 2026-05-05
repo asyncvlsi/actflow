@@ -1,0 +1,64 @@
+*
+*---- act defproc: std::cells::INVX1<> -----
+* raw ports:  A Y Vdd GND
+*
+.subckt _0_0std_0_0cells_0_0INVX1 A Y Vdd GND
+*.PININFO A:I Y:O Vdd:I GND:I
+*.POWER VDD Vdd
+*.POWER GND GND
+*.POWER NSUB GND
+*.POWER PSUB Vdd
+*
+* --- node flags ---
+*
+* Y (combinational)
+*
+* --- end node flags ---
+*
+M0_N Vdd A Y Vdd p W=3U L=0.6U
+M1_N GND A Y GND n W=1.5U L=0.6U
+.ends
+*---- end of process: INVX1<> -----
+*
+*---- act defproc: std::cells::NAND2X1<> -----
+* raw ports:  A B Y Vdd GND
+*
+.subckt _0_0std_0_0cells_0_0NAND2X1 A B Y Vdd GND
+*.PININFO A:I B:I Y:O Vdd:I GND:I
+*.POWER VDD Vdd
+*.POWER GND GND
+*.POWER NSUB GND
+*.POWER PSUB Vdd
+*
+* --- node flags ---
+*
+* Y (combinational)
+*
+* --- end node flags ---
+*
+M0_N Vdd A Y Vdd p W=3U L=0.6U
+M1_N Vdd B Y Vdd p W=3U L=0.6U
+M2_N GND A #3 GND n W=3U L=0.6U
+M3_N #3 B Y GND n W=3U L=0.6U
+.ends
+*---- end of process: NAND2X1<> -----
+*
+*---- act defproc: test<> -----
+* raw ports:  in[0] in[1] in[2] in[3] en out[0] out[1] out[2] out[3] Vdd GND
+*
+.subckt test in_50_6 in_51_6 in_52_6 in_53_6 en out_50_6 out_51_6 out_52_6 out_53_6 Vdd GND
+*.PININFO in_50_6:I in_51_6:I in_52_6:I in_53_6:I en:I out_50_6:O out_51_6:O out_52_6:O out_53_6:O Vdd:I GND:I
+*.POWER VDD Vdd
+*.POWER GND GND
+*.POWER NSUB GND
+*.POWER PSUB Vdd
+xinvs_50_6 invs_50_6_aA out_50_6 Vdd GND _0_0std_0_0cells_0_0INVX1
+xinvs_51_6 invs_51_6_aA out_51_6 Vdd GND _0_0std_0_0cells_0_0INVX1
+xinvs_52_6 invs_52_6_aA out_52_6 Vdd GND _0_0std_0_0cells_0_0INVX1
+xinvs_53_6 invs_53_6_aA out_53_6 Vdd GND _0_0std_0_0cells_0_0INVX1
+xnands_50_6 in_50_6 en invs_50_6_aA Vdd GND _0_0std_0_0cells_0_0NAND2X1
+xnands_51_6 in_51_6 en invs_51_6_aA Vdd GND _0_0std_0_0cells_0_0NAND2X1
+xnands_52_6 in_52_6 en invs_52_6_aA Vdd GND _0_0std_0_0cells_0_0NAND2X1
+xnands_53_6 in_53_6 en invs_53_6_aA Vdd GND _0_0std_0_0cells_0_0NAND2X1
+.ends
+*---- end of process: test<> -----

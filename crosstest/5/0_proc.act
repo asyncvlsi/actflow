@@ -1,0 +1,10 @@
+import std::cells;
+
+defproc test(bool? in[4], en; bool! out[4])
+{
+	std::cells::NAND2X1 nands[4];
+	std::cells::INVX1 invs[4];
+
+	(i:4: in[i] = nands[i].A; en = nands[i].B; invs[i].A=nands[i].Y;)
+	(i:4: out[i]=invs[i].Y;)
+}

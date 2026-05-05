@@ -1,0 +1,18 @@
+# set defaults for config parameters as prs2net for LVS netlist
+conf:set_default_string "net.global_vdd" "Vdd"
+conf:set_default_string "net.global_gnd" "GND"
+conf:set_default_string "net.local_vdd" "VddN"
+conf:set_default_string "net.local_vdd" "GNDN"
+
+conf:set_default_int "net.ignore_loadcap" 1
+conf:set_default_int "net.emit_parasitics" 0
+conf:set_default_int "net.black_box_mode" 1
+conf:set_default_int "net.top_level_only" 0
+
+act:read "0_proc.act"
+act:localize Vdd
+act:localize GND
+act:expand
+act:top "test<>"
+ckt:map
+ckt:save-sp -
