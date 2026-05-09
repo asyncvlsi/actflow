@@ -66,6 +66,8 @@ cmake_build() {
   if [ $? -ne 0 ]
   then
      echo "FAILED"
+     cat logs/${dir}.log
+     cat logs/${dir}.err
      exit 1
   fi
 }
