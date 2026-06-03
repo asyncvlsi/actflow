@@ -1,0 +1,11 @@
+import std;
+open std::channel;
+
+defproc test (e1of2? L)
+{
+  hse {
+    *[ L.e-; [~L.t & ~L.f]; L.e+ ]
+  }
+}
+
+test t;
