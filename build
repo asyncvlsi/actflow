@@ -62,7 +62,7 @@ cmake_build() {
   echo "#### Building and installing package: $dir ####"
   date
   echo
-  ((((cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib $@ .. && make -j 4 && make install; echo $? >&3) 2>logs/${dir}.err | ./gen_output.sh logs/${dir}.log 10 >&4) 3>&1) | (read res; exit $res)) 4>&1
+  ((((cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib $ACTFLOW_EXTRA_CMAKE_FLAGS $@ .. && make -j 4 && make install; echo $? >&3) 2>logs/${dir}.err | ./gen_output.sh logs/${dir}.log 10 >&4) 3>&1) | (read res; exit $res)) 4>&1
   if [ $? -ne 0 ]
   then
      echo "FAILED"
@@ -78,7 +78,7 @@ cmake_build_bipart() {
   echo "#### Building and installing package: Bipart ####"
   date
   echo
-  (cd BiPart; if [ ! -d build ]; then mkdir build; fi; cd build; LEF_ROOT=$ACT_HOME GALOIS_INCLUDE=$ACT_HOME/include GALOIS_LIB=$ACT_HOME/lib DEF_ROOT=$ACT_HOME cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib ..  && make -j 4 && make install) || exit 1
+  (cd BiPart; if [ ! -d build ]; then mkdir build; fi; cd build; LEF_ROOT=$ACT_HOME GALOIS_INCLUDE=$ACT_HOME/include GALOIS_LIB=$ACT_HOME/lib DEF_ROOT=$ACT_HOME cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib $ACTFLOW_EXTRA_CMAKE_FLAGS ..  && make -j 4 && make install) || exit 1
 }
 
 act_tool_build() {
@@ -137,7 +137,7 @@ echo
 echo "####  Building and installing the core ACT library ####"
 echo
 export VLSI_TOOLS_SRC=`pwd`/act
-((((cd act; ./configure $ACT_HOME CXX=$cxx_compiler; ./build; make install; echo $? >&3) 2> logs/act.err | ./gen_output.sh logs/act.log >&4) 3>&1) | (read res; exit $res)) 4>&1
+((((cd act; ./configure $ACT_HOME CXX=$cxx_compiler CFLAGS="$CFLAGS $ACTFLOW_EXTRA_CFLAGS"; ./build; make install; echo $? >&3) 2> logs/act.err | ./gen_output.sh logs/act.log >&4) 3>&1) | (read res; exit $res)) 4>&1
 if [ $? -ne 0 ]
 then
 	echo "FAILED"; exit $?
