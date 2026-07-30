@@ -62,7 +62,7 @@ cmake_build() {
   echo "#### Building and installing package: $dir ####"
   date
   echo
-  ((((cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ ! -d build ]; then mkdir build; fi; cd build; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib $ACTFLOW_EXTRA_CMAKE_FLAGS $@ .. && make -j 4 && make install; echo $? >&3) 2>logs/${dir}.err | ./gen_output.sh logs/${dir}.log 10 >&4) 3>&1) | (read res; exit $res)) 4>&1
+  ((((cd $dir; if [ -x ./configure ]; then ./configure; fi; if [ ! -d build ]; then mkdir build; fi; cd build; unset CXX; cmake -DCMAKE_INSTALL_PREFIX=$ACT_HOME -DCMAKE_CXX_COMPILER=$cxx_compiler $needlib $ACTFLOW_EXTRA_CMAKE_FLAGS $@ .. && make -j 4 && make install; echo $? >&3) 2>logs/${dir}.err | ./gen_output.sh logs/${dir}.log 10 >&4) 3>&1) | (read res; exit $res)) 4>&1
   if [ $? -ne 0 ]
   then
      echo "FAILED"
