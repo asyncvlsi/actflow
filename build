@@ -262,3 +262,6 @@ act_tool_build actsim
 
 echo
 echo "Finished: `date`"
+
+rev=`git rev-parse HEAD`
+echo "actflow git revision: $rev" > $ACT_HOME/actflow_git_rev
