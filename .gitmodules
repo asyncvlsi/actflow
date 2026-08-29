@@ -1,15 +1,15 @@
 [submodule "act"]
 	path = act
 	url = http://github.com/asyncvlsi/act
-	branch = master
+	branch = timing-driven-placement
 [submodule "phyDB"]
 	path = phyDB
 	url = http://github.com/asyncvlsi/phyDB
-	branch = main
+	branch = timing-driven-placement
 [submodule "Dali"]
 	path = Dali
 	url = http://github.com/asyncvlsi/Dali
-	branch = main
+	branch = timing-driven-placement
 [submodule "BiPart"]
 	path = BiPart
 	url = http://github.com/asyncvlsi/BiPart
@@ -25,7 +25,11 @@
 [submodule "interact"]
 	path = interact
 	url = http://github.com/asyncvlsi/interact
-	branch = main
+	branch = timing-driven-placement
+[submodule "timing"]
+	path = timing
+	url = https://github.com/rmanohar/timing.git
+	branch = timing-driven-placement
 [submodule "Galois"]
 	path = Galois
 	url = https://github.com/IntelligentSoftwareSystems/Galois
@@ -61,7 +65,7 @@
 [submodule "layout"]
 	path = layout
 	url = https://github.com/asyncvlsi/layout
-	branch = master
+	branch = timing-driven-placement
 [submodule "xcell"]
 	path = xcell
 	url = https://github.com/asyncvlsi/xcell
