@@ -1,0 +1,10 @@
+--- libgalois/include/galois/substrate/EnvCheck.h
++++ libgalois/include/galois/substrate/EnvCheck.h
+@@ -21,6 +21,7 @@
+ #define GALOIS_SUBSTRATE_ENVCHECK_H
+ 
+ #include <cassert>
++#include <cstdlib>
+ #include <string>
+ 
+ #include "galois/config.h"
