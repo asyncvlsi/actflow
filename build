@@ -160,6 +160,14 @@ echo "####  Building and installing the LEF/DEF parser ####"
 echo
 (cd lefdef; make && make install) 2>logs/lefdef.err | ./gen_output.sh logs/lefdef.log || exit 1
 
+#
+# Build and install sqlite3
+#
+echo
+echo "#### Building and installing sqlite3 ####"
+echo
+(cd sqlite3; ./configure --prefix=$ACT_HOME; make && make install) 2>logs/sqlite3.err | ./gen_output.sh logs/sqlite3.log || exit 1
+
 # Build and install the SDF/SPEF library
 act_tool_build annotate
 
