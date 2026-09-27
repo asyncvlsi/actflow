@@ -82,4 +82,4 @@
 	url = https://github.com/asyncvlsi/fpga_proto
 [submodule "sqlite"]
 	path = sqlite
-	url = https://github.com/sqlite/sqlite
+	url = https://github.com/asyncvlsi/sqlite
